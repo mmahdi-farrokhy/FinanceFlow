@@ -1,4 +1,4 @@
-package com.mmf.financeflow.entities;
+package com.mmf.financeflow.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -17,7 +17,7 @@ public class Budget {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "category", nullable = false)
-    private AccountCategory category;
+    private FinancialCategory category;
 
     @Column(name = "amount", nullable = false)
     private BigDecimal amount;

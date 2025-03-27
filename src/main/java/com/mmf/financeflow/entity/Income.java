@@ -1,4 +1,4 @@
-package com.mmf.financeflow.entities;
+package com.mmf.financeflow.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
