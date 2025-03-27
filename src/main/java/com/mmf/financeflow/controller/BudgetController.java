@@ -1,7 +1,7 @@
 package com.mmf.financeflow.controller;
 
 import com.mmf.financeflow.entity.Budget;
-import com.mmf.financeflow.repository.BudgetRepository;
+import com.mmf.financeflow.service.BudgetService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +14,15 @@ import java.util.List;
 @AllArgsConstructor
 public class BudgetController {
     @Autowired
-    private BudgetRepository budgetRepository;
+    private BudgetService budgetService;
 
     @PostMapping
     public ResponseEntity<Budget> createBudget(@RequestBody Budget budget) {
-        return ResponseEntity.ok(budgetRepository.save(budget));
+        return ResponseEntity.ok(budgetService.create(budget));
     }
 
     @GetMapping
     public ResponseEntity<List<Budget>> getAllBudgets() {
-        return ResponseEntity.ok(budgetRepository.findAll());
+        return ResponseEntity.ok(budgetService.findAll());
     }
 }
