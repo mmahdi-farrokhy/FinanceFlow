@@ -1,7 +1,7 @@
 package com.mmf.financeflow.controller;
 
 import com.mmf.financeflow.entity.Expense;
-import com.mmf.financeflow.repository.ExpenseRepository;
+import com.mmf.financeflow.service.ExpenseService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +14,15 @@ import java.util.List;
 @AllArgsConstructor
 public class ExpenseController {
     @Autowired
-    private ExpenseRepository expenseRepository;
+    private ExpenseService expenseService;
 
     @PostMapping
     public ResponseEntity<Expense> createExpense(@RequestBody Expense expense) {
-        return ResponseEntity.ok(expenseRepository.save(expense));
+        return ResponseEntity.ok(expenseService.create(expense));
     }
 
     @GetMapping
     public ResponseEntity<List<Expense>> getAllExpenses() {
-        return ResponseEntity.ok(expenseRepository.findAll());
+        return ResponseEntity.ok(expenseService.findAll());
     }
 }
