@@ -22,9 +22,6 @@ import java.io.IOException;
 @AllArgsConstructor
 public class JWTAuthFilter extends OncePerRequestFilter {
     @Autowired
-    private JWTUtil jwtUtil;
-
-    @Autowired
     private UserDetailsService userDetailsService;
 
     @Override
@@ -37,7 +34,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
             token = AUTH_HEADER.substring(7);
 
             try {
-                username = jwtUtil.getUsernameFromToken(token);
+                username = JWTUtil.getUsernameFromToken(token);
             } catch (ExpiredJwtException ex) {
                 System.out.println("Token is expired!");
             } catch (Exception ex) {
@@ -48,7 +45,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            if (jwtUtil.isTokenValid(token)) {
+            if (JWTUtil.isTokenValid(token)) {
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(username, null, userDetails.getAuthorities());
 
