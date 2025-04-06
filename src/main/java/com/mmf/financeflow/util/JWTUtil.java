@@ -14,10 +14,13 @@ import java.util.stream.Collectors;
 
 @Component
 public class JWTUtil {
-    private final long EXPIRATION_MS = 1000 * 60 * 60 * 24;
-    private final Key KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private static final long EXPIRATION_MS = 1000 * 60 * 60 * 24;
+    private static final Key KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    public String generateToken(String username, Set<String> roles) {
+    private JWTUtil() {
+    }
+
+    public static String generateToken(String username, Set<String> roles) {
         return Jwts.builder()
                 .setSubject(username)
                 .claim("roles", roles)
@@ -27,11 +30,11 @@ public class JWTUtil {
                 .compact();
     }
 
-    public String getUsernameFromToken(String token) {
+    public static String getUsernameFromToken(String token) {
         return getClaims(token).getSubject();
     }
 
-    public Set<String> getRolesFromToken(String token) {
+    public static Set<String> getRolesFromToken(String token) {
         Object roles = getClaims(token).get("roles");
         if (roles instanceof Set<?>) {
             return ((Set<?>) roles).stream().map(Object::toString).collect(Collectors.toSet());
@@ -42,7 +45,7 @@ public class JWTUtil {
         return Set.of();
     }
 
-    public boolean isTokenValid(String token) {
+    public static boolean isTokenValid(String token) {
         try {
             getClaims(token);
             return true;
@@ -51,7 +54,7 @@ public class JWTUtil {
         }
     }
 
-    private Claims getClaims(String token) {
+    private static Claims getClaims(String token) {
         return Jwts
                 .parser()
                 .setSigningKey(KEY)
