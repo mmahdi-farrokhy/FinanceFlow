@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("api/auth")
 @AllArgsConstructor
-public class AuthController {
+public class AppUserController {
     @Autowired
     private AppUserService appUserService;
 
