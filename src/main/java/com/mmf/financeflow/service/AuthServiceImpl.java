@@ -18,7 +18,7 @@ public class AuthServiceImpl implements AuthService {
     private AppUserRepository appUserRepository;
 
     @Override
-    public Optional<AppUser> createAppUser(RegisterRequest registerRequest) {
+    public Optional<AppUser> registerAppUser(RegisterRequest registerRequest) {
         AppUser appUser = new AppUser();
         appUser.setUsername(registerRequest.getUsername());
         appUser.setPassword(registerRequest.getPassword());
