@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,20 +23,16 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class AppUserServiceImpl implements AppUserService {
-    @Autowired
     private AppUserRepository appUserRepository;
-
-    @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
     private UserDetailsService userDetailsService;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Optional<AppUser> registerAppUser(RegisterRequest registerRequest) {
         AppUser registeredAppUser = new AppUser();
         registeredAppUser.setUsername(registerRequest.getUsername());
-        registeredAppUser.setPassword(registerRequest.getPassword());
+        registeredAppUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         registeredAppUser.setRoles(Set.of(UserRole.ROLE_USER));
         return Optional.of(appUserRepository.save(registeredAppUser));
     }
