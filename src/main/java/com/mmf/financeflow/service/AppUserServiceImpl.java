@@ -1,21 +1,23 @@
 package com.mmf.financeflow.service;
 
+import com.mmf.financeflow.dto.JWTResponse;
 import com.mmf.financeflow.dto.LoginRequest;
 import com.mmf.financeflow.dto.RegisterRequest;
 import com.mmf.financeflow.entity.AppUser;
 import com.mmf.financeflow.entity.UserRole;
 import com.mmf.financeflow.repository.AppUserRepository;
+import com.mmf.financeflow.util.JWTUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -31,12 +33,11 @@ public class AppUserServiceImpl implements AppUserService {
 
     @Override
     public Optional<AppUser> registerAppUser(RegisterRequest registerRequest) {
-        AppUser appUser = new AppUser();
-        appUser.setUsername(registerRequest.getUsername());
-        appUser.setPassword(registerRequest.getPassword());
-        appUser.setRoles(Set.of(UserRole.ROLE_USER));
-        AppUser save = appUserRepository.save(appUser);
-        return Optional.of(save);
+        AppUser registeredAppUser = new AppUser();
+        registeredAppUser.setUsername(registerRequest.getUsername());
+        registeredAppUser.setPassword(registerRequest.getPassword());
+        registeredAppUser.setRoles(Set.of(UserRole.ROLE_USER));
+        return Optional.of(appUserRepository.save(registeredAppUser));
     }
 
     @Override
@@ -49,8 +50,7 @@ public class AppUserServiceImpl implements AppUserService {
         try {
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
-            Authentication authentication =
-                    authenticationManager.authenticate(authenticationToken);
+            authenticationManager.authenticate(authenticationToken);
 
             return true;
         } catch (Exception ex) {
@@ -61,5 +61,19 @@ public class AppUserServiceImpl implements AppUserService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         return userDetailsService.loadUserByUsername(username);
+    }
+
+    @Override
+    public JWTResponse generateJWTResponse(String username) {
+        UserDetails userDetails = loadUserByUsername(username);
+
+        Set<UserRole> roles =
+                userDetails.getAuthorities().stream()
+                        .map(auth -> UserRole.valueOf(auth.getAuthority()))
+                        .collect(Collectors.toSet());
+
+        String token = JWTUtil.generateToken(userDetails.getUsername(), roles);
+
+        return new JWTResponse(token, userDetails.getUsername(), roles);
     }
 }

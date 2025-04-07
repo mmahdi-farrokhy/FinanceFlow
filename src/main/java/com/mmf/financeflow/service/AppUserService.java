@@ -1,5 +1,6 @@
 package com.mmf.financeflow.service;
 
+import com.mmf.financeflow.dto.JWTResponse;
 import com.mmf.financeflow.dto.LoginRequest;
 import com.mmf.financeflow.dto.RegisterRequest;
 import com.mmf.financeflow.entity.AppUser;
@@ -15,4 +16,6 @@ public interface AppUserService {
     boolean areLoginCredentialsValid(LoginRequest loginRequest);
 
     UserDetails loadUserByUsername(String username);
+
+    JWTResponse generateJWTResponse(String username);
 }
