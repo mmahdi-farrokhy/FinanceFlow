@@ -1,5 +1,6 @@
 package com.mmf.financeflow.util;
 
+import com.mmf.financeflow.entity.UserRole;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -20,10 +21,12 @@ public class JWTUtil {
     private JWTUtil() {
     }
 
-    public static String generateToken(String username, Set<String> roles) {
+    public static String generateToken(String username, Set<UserRole> roles) {
+        Set<String> stringRoles = roles.stream().map(UserRole::name).collect(Collectors.toSet());
+
         return Jwts.builder()
                 .setSubject(username)
-                .claim("roles", roles)
+                .claim("roles", stringRoles)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_MS))
                 .signWith(KEY)
