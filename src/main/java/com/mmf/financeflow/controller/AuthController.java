@@ -6,6 +6,7 @@ import com.mmf.financeflow.dto.RegisterRequest;
 import com.mmf.financeflow.entity.AppUser;
 import com.mmf.financeflow.entity.UserRole;
 import com.mmf.financeflow.repository.AppUserRepository;
+import com.mmf.financeflow.service.AuthService;
 import com.mmf.financeflow.util.JWTUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,19 +42,22 @@ public class AuthController {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private AuthService authService;
+
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) {
         if (appUserRepository.exitsByUsername(registerRequest.getUsername())) {
             return ResponseEntity.status(409).body("Username is already taken.");
         }
 
-        AppUser appUser = new AppUser();
-        appUser.setUsername(registerRequest.getUsername());
-        appUser.setPassword(registerRequest.getPassword());
-        appUser.setRoles(Set.of(UserRole.ROLE_USER));
-        appUserRepository.save(appUser);
+        Optional<AppUser> createdUser = authService.registerAppUser(registerRequest);
 
-        return ResponseEntity.ok("User registered successfully.");
+        if (createdUser.isPresent()) {
+            return ResponseEntity.ok("User registered successfully.");
+        } else {
+            return ResponseEntity.status(400).body("Could not register the user.");
+        }
     }
 
     @PostMapping("/login")
