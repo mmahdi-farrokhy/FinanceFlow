@@ -13,7 +13,6 @@ import java.util.List;
 @RequestMapping("/api/expense")
 @AllArgsConstructor
 public class ExpenseController {
-    @Autowired
     private ExpenseService expenseService;
 
     @PostMapping

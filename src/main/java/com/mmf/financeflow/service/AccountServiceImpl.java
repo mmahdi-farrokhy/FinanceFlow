@@ -11,7 +11,6 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class AccountServiceImpl implements AccountService {
-    @Autowired
     private AccountRepository accountRepository;
 
     @Override

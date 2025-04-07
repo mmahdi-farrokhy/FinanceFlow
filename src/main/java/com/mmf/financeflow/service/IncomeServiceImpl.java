@@ -3,7 +3,6 @@ package com.mmf.financeflow.service;
 import com.mmf.financeflow.entity.Income;
 import com.mmf.financeflow.repository.IncomeRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +10,6 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class IncomeServiceImpl implements IncomeService {
-    @Autowired
     private IncomeRepository incomeRepository;
 
     @Override

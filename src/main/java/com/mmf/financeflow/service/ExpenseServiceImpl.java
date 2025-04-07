@@ -11,7 +11,6 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ExpenseServiceImpl implements ExpenseService {
-    @Autowired
     private ExpenseRepository expenseRepository;
 
     @Override

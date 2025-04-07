@@ -13,7 +13,6 @@ import java.util.List;
 @RequestMapping("/api/account")
 @AllArgsConstructor
 public class AccountController {
-    @Autowired
     private AccountService accountService;
 
     @PostMapping

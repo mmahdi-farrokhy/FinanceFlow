@@ -11,7 +11,6 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class BudgetServiceImpl implements BudgetService {
-    @Autowired
     private BudgetRepository budgetRepository;
 
     @Override

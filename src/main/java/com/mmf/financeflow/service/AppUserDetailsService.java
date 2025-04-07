@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class AppUserDetailsService implements UserDetailsService {
-    @Autowired
     private AppUserRepository appUserRepository;
 
     @Override

@@ -13,7 +13,6 @@ import java.util.List;
 @RequestMapping("/api/budget")
 @AllArgsConstructor
 public class BudgetController {
-    @Autowired
     private BudgetService budgetService;
 
     @PostMapping
