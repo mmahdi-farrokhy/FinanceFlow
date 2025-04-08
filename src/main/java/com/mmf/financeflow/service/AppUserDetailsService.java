@@ -1,7 +1,7 @@
 package com.mmf.financeflow.service;
 
 import com.mmf.financeflow.entity.Client;
-import com.mmf.financeflow.repository.AppUserRepository;
+import com.mmf.financeflow.repository.ClientRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class AppUserDetailsService implements UserDetailsService {
-    private AppUserRepository appUserRepository;
+    private ClientRepository appUserRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

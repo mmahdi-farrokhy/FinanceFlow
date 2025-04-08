@@ -4,7 +4,7 @@ import com.mmf.financeflow.dto.JWTResponse;
 import com.mmf.financeflow.dto.LoginRequest;
 import com.mmf.financeflow.dto.RegisterRequest;
 import com.mmf.financeflow.entity.Client;
-import com.mmf.financeflow.repository.AppUserRepository;
+import com.mmf.financeflow.repository.ClientRepository;
 import com.mmf.financeflow.util.JWTUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class AppUserServiceImpl implements AppUserService {
-    private AppUserRepository appUserRepository;
+    private ClientRepository appUserRepository;
     private AuthenticationManager authenticationManager;
     private UserDetailsService userDetailsService;
     private PasswordEncoder passwordEncoder;
