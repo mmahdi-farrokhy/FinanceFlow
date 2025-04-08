@@ -1,7 +1,7 @@
 package com.mmf.financeflow.exception;
 
-public class AccountCategoryDuplicationException extends RuntimeException {
-    public AccountCategoryDuplicationException(String message) {
+public class DuplicatedAccountCategoryException extends RuntimeException {
+    public DuplicatedAccountCategoryException(String message) {
         super(message);
     }
 }
