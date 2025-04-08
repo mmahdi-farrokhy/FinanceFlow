@@ -1,9 +1,7 @@
 package com.mmf.financeflow.service;
 
 import com.mmf.financeflow.entity.Expense;
-import com.mmf.financeflow.repository.ExpenseRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
