@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class AppUserServiceImpl implements ClientService {
+public class ClientServiceImpl implements ClientService {
     private ClientRepository appUserRepository;
     private AuthenticationManager authenticationManager;
     private UserDetailsService userDetailsService;
