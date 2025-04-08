@@ -1,12 +1,12 @@
 package com.mmf.financeflow.repository;
 
-import com.mmf.financeflow.entity.AppUser;
+import com.mmf.financeflow.entity.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface AppUserRepository extends JpaRepository<AppUser, Long> {
-    Optional<AppUser> findByUsername(String username);
+public interface AppUserRepository extends JpaRepository<Client, Long> {
+    Optional<Client> findByUsername(String username);
 
     boolean exitsByUsername(String username);
 }

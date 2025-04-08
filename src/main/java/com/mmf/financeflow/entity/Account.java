@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -27,8 +26,8 @@ public class Account {
     private double balance;
 
     @ManyToOne
-    @JoinColumn(name = "app_user_id")
-    private AppUser appUser;
+    @JoinColumn(name = "client_id")
+    private Client client;
 
     @Override
     public boolean equals(Object o) {

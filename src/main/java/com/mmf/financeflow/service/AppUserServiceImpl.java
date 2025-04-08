@@ -3,7 +3,7 @@ package com.mmf.financeflow.service;
 import com.mmf.financeflow.dto.JWTResponse;
 import com.mmf.financeflow.dto.LoginRequest;
 import com.mmf.financeflow.dto.RegisterRequest;
-import com.mmf.financeflow.entity.AppUser;
+import com.mmf.financeflow.entity.Client;
 import com.mmf.financeflow.repository.AppUserRepository;
 import com.mmf.financeflow.util.JWTUtil;
 import lombok.AllArgsConstructor;
@@ -27,8 +27,8 @@ public class AppUserServiceImpl implements AppUserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public Optional<AppUser> registerAppUser(RegisterRequest registerRequest) {
-        AppUser registeredAppUser = new AppUser();
+    public Optional<Client> registerAppUser(RegisterRequest registerRequest) {
+        Client registeredAppUser = new Client();
         registeredAppUser.setUsername(registerRequest.getUsername());
         registeredAppUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         registeredAppUser.setRoles(Set.of(UserRole.ROLE_USER));

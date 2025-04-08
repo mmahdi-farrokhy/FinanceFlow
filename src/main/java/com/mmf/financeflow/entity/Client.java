@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Entity
-@Table(name = "app_user")
+@Table(name = "client")
 @Getter
 @Setter
-public class AppUser {
+public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,16 +30,16 @@ public class AppUser {
     @Column(name = "unallocated_budget")
     private double unallocatedBudget;
 
-    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Account> accounts;
 
-    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Income> incomes;
 
-    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Expense> expenses;
 
-    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Budget> budgets;
 
     public void addAccount(Account newAccount) {
@@ -56,7 +56,7 @@ public class AppUser {
         if (accountCategories.contains(newAccountCategory)) {
             throw new DuplicatedAccountCategoryException("Account from category " + newAccountCategory + " already exists!");
         } else {
-            newAccount.setAppUser(this);
+            newAccount.setClient(this);
             accounts.add(newAccount);
         }
     }
@@ -72,7 +72,7 @@ public class AppUser {
 
         unallocatedBudget += newIncome.getAmount();
 
-        newIncome.setAppUser(this);
+        newIncome.setClient(this);
         incomes.add(newIncome);
     }
 
@@ -105,7 +105,7 @@ public class AppUser {
         balance -= newExpenseAmount;
         account.setBalance(balance);
 
-        newExpense.setAppUser(this);
+        newExpense.setClient(this);
         expenses.add(newExpense);
     }
 
@@ -136,10 +136,10 @@ public class AppUser {
         double balance = account.getBalance();
         balance += newBudgetAmount;
         account.setBalance(balance);
-        
+
         unallocatedBudget -= newBudgetAmount;
 
-        newBudget.setAppUser(this);
+        newBudget.setClient(this);
         budgets.add(newBudget);
     }
 }

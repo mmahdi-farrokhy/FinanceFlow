@@ -30,8 +30,8 @@ public class Expense {
     private BudgetCategory category;
 
     @ManyToOne
-    @JoinColumn(name = "app_user_id")
-    private AppUser appUser;
+    @JoinColumn(name = "client_id")
+    private Client client;
 
     @Override
     public boolean equals(Object o) {

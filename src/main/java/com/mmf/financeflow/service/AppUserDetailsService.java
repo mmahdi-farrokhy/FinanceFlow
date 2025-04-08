@@ -1,6 +1,6 @@
 package com.mmf.financeflow.service;
 
-import com.mmf.financeflow.entity.AppUser;
+import com.mmf.financeflow.entity.Client;
 import com.mmf.financeflow.repository.AppUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,7 +20,7 @@ public class AppUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AppUser appUser = appUserRepository.findByUsername(username)
+        Client appUser = appUserRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found!"));
 
         Set<SimpleGrantedAuthority> authorities = appUser.getRoles().stream()

@@ -3,7 +3,7 @@ package com.mmf.financeflow.controller;
 import com.mmf.financeflow.dto.JWTResponse;
 import com.mmf.financeflow.dto.LoginRequest;
 import com.mmf.financeflow.dto.RegisterRequest;
-import com.mmf.financeflow.entity.AppUser;
+import com.mmf.financeflow.entity.Client;
 import com.mmf.financeflow.service.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,7 @@ public class AppUserController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is already taken.");
         }
 
-        Optional<AppUser> createdUser = appUserService.registerAppUser(registerRequest);
+        Optional<Client> createdUser = appUserService.registerAppUser(registerRequest);
 
         if (createdUser.isPresent()) {
             return ResponseEntity.ok("User registered successfully.");

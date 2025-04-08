@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -28,8 +27,8 @@ public class Budget {
     private BudgetCategory category;
 
     @ManyToOne
-    @JoinColumn(name = "app_user_id")
-    private AppUser appUser;
+    @JoinColumn(name = "client_id")
+    private Client client;
 
     @Override
     public boolean equals(Object o) {
