@@ -4,7 +4,7 @@ import com.mmf.financeflow.dto.JWTResponse;
 import com.mmf.financeflow.dto.LoginRequest;
 import com.mmf.financeflow.dto.RegisterRequest;
 import com.mmf.financeflow.entity.Client;
-import com.mmf.financeflow.service.AppUserService;
+import com.mmf.financeflow.service.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ import java.util.Set;
 @RequestMapping("api/auth")
 @AllArgsConstructor
 public class AppUserController {
-    private AppUserService appUserService;
+    private ClientService appUserService;
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) {

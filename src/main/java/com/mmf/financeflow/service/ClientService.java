@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Optional;
 
-public interface AppUserService {
+public interface ClientService {
     Optional<Client> registerAppUser(RegisterRequest registerRequest);
 
     boolean exitsByUsername(String username);
