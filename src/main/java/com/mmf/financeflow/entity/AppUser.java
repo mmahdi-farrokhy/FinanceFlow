@@ -43,14 +43,16 @@ public class AppUser {
             accounts = new LinkedList<>();
         }
 
-        List<BudgetCategory> accountCategories = accounts.stream()
-                .map(Account::getCategory)
-                .toList();
+        List<BudgetCategory> accountCategories =
+                accounts.stream()
+                        .map(Account::getCategory)
+                        .toList();
 
         BudgetCategory newAccountCategory = newAccount.getCategory();
         if (accountCategories.contains(newAccountCategory)) {
             throw new DuplicatedAccountCategoryException("Account from category " + newAccountCategory + " already exists!");
         } else {
+            newAccount.setAppUser(this);
             accounts.add(newAccount);
         }
     }
