@@ -16,21 +16,21 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class ClientDetailsService implements UserDetailsService {
-    private ClientRepository appUserRepository;
+    private ClientRepository clientRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Client appUser = appUserRepository.findByUsername(username)
+        Client client = clientRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found!"));
 
-        Set<SimpleGrantedAuthority> authorities = appUser.getRoles().stream()
+        Set<SimpleGrantedAuthority> authorities = client.getRoles().stream()
                 .map(UserRole::name)
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toSet());
 
         return new User(
-                appUser.getUsername(),
-                appUser.getPassword(),
+                client.getUsername(),
+                client.getPassword(),
                 authorities);
     }
 }

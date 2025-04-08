@@ -19,16 +19,16 @@ import java.util.Set;
 @RestController
 @RequestMapping("api/auth")
 @AllArgsConstructor
-public class AppUserController {
-    private ClientService appUserService;
+public class ClientController {
+    private ClientService clientService;
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) {
-        if (appUserService.exitsByUsername(registerRequest.getUsername())) {
+        if (clientService.exitsByUsername(registerRequest.getUsername())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is already taken.");
         }
 
-        Optional<Client> createdUser = appUserService.registerClient(registerRequest);
+        Optional<Client> createdUser = clientService.registerClient(registerRequest);
 
         if (createdUser.isPresent()) {
             return ResponseEntity.ok("User registered successfully.");
@@ -39,8 +39,8 @@ public class AppUserController {
 
     @PostMapping("/login")
     public ResponseEntity<JWTResponse> login(@RequestBody LoginRequest loginRequest) {
-        if (appUserService.areLoginCredentialsValid(loginRequest)) {
-            JWTResponse jwtResponse = appUserService.generateJWTResponse(loginRequest.getUsername());
+        if (clientService.areLoginCredentialsValid(loginRequest)) {
+            JWTResponse jwtResponse = clientService.generateJWTResponse(loginRequest.getUsername());
             return ResponseEntity.ok(jwtResponse);
         } else {
             JWTResponse invalidResponse = new JWTResponse("", loginRequest.getUsername(), Set.of());

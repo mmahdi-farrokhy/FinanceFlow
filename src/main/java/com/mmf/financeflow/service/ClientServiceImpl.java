@@ -21,23 +21,23 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class ClientServiceImpl implements ClientService {
-    private ClientRepository appUserRepository;
+    private ClientRepository clientRepository;
     private AuthenticationManager authenticationManager;
     private UserDetailsService userDetailsService;
     private PasswordEncoder passwordEncoder;
 
     @Override
     public Optional<Client> registerClient(RegisterRequest registerRequest) {
-        Client registeredAppUser = new Client();
-        registeredAppUser.setUsername(registerRequest.getUsername());
-        registeredAppUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        registeredAppUser.setRoles(Set.of(UserRole.ROLE_USER));
-        return Optional.of(appUserRepository.save(registeredAppUser));
+        Client registeredClient = new Client();
+        registeredClient.setUsername(registerRequest.getUsername());
+        registeredClient.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        registeredClient.setRoles(Set.of(UserRole.ROLE_USER));
+        return Optional.of(clientRepository.save(registeredClient));
     }
 
     @Override
     public boolean exitsByUsername(String username) {
-        return appUserRepository.exitsByUsername(username);
+        return clientRepository.exitsByUsername(username);
     }
 
     @Override
