@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
 @Table(name = "account")
@@ -28,4 +29,17 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return Double.compare(balance, account.balance) == 0 && Objects.equals(title, account.title) && category == account.category;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, category, balance);
+    }
 }
