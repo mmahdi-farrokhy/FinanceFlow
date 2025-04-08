@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,9 +22,18 @@ public class AppUser {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "roles")
-    private Set<UserRole> roles;
+    @Column(name = "unallocated_budget")
+    private double unallocatedBudget;
+
+    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
+    private Set<Account> accounts;
+
+    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
+    private List<Income> incomes;
+
+    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
+    private List<Expense> expenses;
+
+    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
+    private List<Budget> budgets;
 }
