@@ -1,6 +1,6 @@
 package com.mmf.financeflow.entity;
 
-public enum FinancialCategory {
+public enum BudgetCategory {
     WANTS,
     NEEDS,
     SAVINGS
