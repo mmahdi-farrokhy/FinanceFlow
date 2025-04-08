@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,9 +16,9 @@ public class Expense {
     private Long id;
 
     @Column(name = "amount", nullable = false)
-    private BigDecimal amount;
+    private double amount;
 
-    @Column(name = "description", length = 255)
+    @Column(name = "description")
     private String description;
 
     @Column(name = "date_time")
@@ -27,5 +26,9 @@ public class Expense {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "category", nullable = false)
-    private FinancialCategory category;
+    private BudgetCategory category;
+
+    @ManyToOne
+    @JoinColumn(name = "app_user_id")
+    private AppUser appUser;
 }
