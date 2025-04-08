@@ -1,13 +1,16 @@
 package com.mmf.financeflow.entity;
 
 import com.mmf.financeflow.exception.DuplicatedAccountCategoryException;
+import com.mmf.financeflow.exception.InsufficientBalanceException;
 import com.mmf.financeflow.exception.InvalidAmountException;
+import com.mmf.financeflow.exception.MismatchedCategoryException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "app_user")
@@ -71,5 +74,38 @@ public class AppUser {
 
         newIncome.setAppUser(this);
         incomes.add(newIncome);
+    }
+
+    public void addExpense(Expense newExpense) {
+        if (expenses == null) {
+            expenses = new LinkedList<>();
+        }
+
+        double newExpenseAmount = newExpense.getAmount();
+        if (newExpenseAmount <= 0) {
+            throw new InvalidAmountException("Expense amount should be greater than 0!");
+        }
+
+        BudgetCategory newExpenseCategory = newExpense.getCategory();
+        Optional<Account> accountWithSameCategory = accounts.stream()
+                .filter(account -> account.getCategory() == newExpenseCategory)
+                .findFirst();
+
+        if (accountWithSameCategory.isEmpty()) {
+            throw new MismatchedCategoryException("Account with category " + newExpenseCategory + " does not exist");
+        }
+
+        Account account = accountWithSameCategory.get();
+        double balance = account.getBalance();
+
+        if (balance < newExpenseAmount) {
+            throw new InsufficientBalanceException("Expense amount " + newExpenseAmount + " is more than balance of " + newExpenseCategory + " account: " + balance);
+        }
+
+        balance -= newExpenseAmount;
+        account.setBalance(balance);
+
+        newExpense.setAppUser(this);
+        expenses.add(newExpense);
     }
 }
