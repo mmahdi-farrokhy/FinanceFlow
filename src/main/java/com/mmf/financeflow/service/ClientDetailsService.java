@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class AppUserDetailsService implements UserDetailsService {
+public class ClientDetailsService implements UserDetailsService {
     private ClientRepository appUserRepository;
 
     @Override
