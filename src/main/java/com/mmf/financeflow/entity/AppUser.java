@@ -1,6 +1,7 @@
 package com.mmf.financeflow.entity;
 
 import com.mmf.financeflow.exception.DuplicatedAccountCategoryException;
+import com.mmf.financeflow.exception.InvalidAmountException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -55,5 +56,20 @@ public class AppUser {
             newAccount.setAppUser(this);
             accounts.add(newAccount);
         }
+    }
+
+    public void addIncome(Income newIncome) {
+        if (incomes == null) {
+            incomes = new LinkedList<>();
+        }
+
+        if (newIncome.getAmount() <= 0) {
+            throw new InvalidAmountException("Income amount should be greater than 0!");
+        }
+
+        unallocatedBudget += newIncome.getAmount();
+
+        newIncome.setAppUser(this);
+        incomes.add(newIncome);
     }
 }
