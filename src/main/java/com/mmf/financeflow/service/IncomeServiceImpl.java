@@ -1,7 +1,6 @@
 package com.mmf.financeflow.service;
 
 import com.mmf.financeflow.entity.Income;
-import com.mmf.financeflow.repository.IncomeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
