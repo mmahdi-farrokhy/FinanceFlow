@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface ClientRepository extends JpaRepository<Client, Long> {
     Optional<Client> findByUsername(String username);
 
-    boolean exitsByUsername(String username);
+    boolean existsByUsername(String username);
 
     @Query("SELECT account FROM Account account WHERE account.client.username = :username")
     List<Account> findAccountsByUsername(@Param("username") String username);
