@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "income")
@@ -27,4 +28,17 @@ public class Income {
     @ManyToOne
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Income income = (Income) o;
+        return Double.compare(amount, income.amount) == 0 && Objects.equals(dateTime, income.dateTime) && Objects.equals(description, income.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount, dateTime, description);
+    }
 }
