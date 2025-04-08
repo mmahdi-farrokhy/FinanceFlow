@@ -21,7 +21,7 @@ public class ClientDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Client client = clientRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found!"));
-        
+
         return new User(
                 client.getUsername(),
                 client.getPassword(),
