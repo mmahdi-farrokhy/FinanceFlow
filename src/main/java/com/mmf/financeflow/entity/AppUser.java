@@ -108,4 +108,38 @@ public class AppUser {
         newExpense.setAppUser(this);
         expenses.add(newExpense);
     }
+
+    public void addBudget(Budget newBudget) {
+        if (budgets == null) {
+            budgets = new LinkedList<>();
+        }
+
+        double newBudgetAmount = newBudget.getAmount();
+        if (newBudgetAmount <= 0) {
+            throw new InvalidAmountException("Budget amount should be greater than 0!");
+        }
+
+        if (newBudgetAmount > unallocatedBudget) {
+            throw new InsufficientBalanceException("Budget amount " + newBudgetAmount + " is more than unallocated budget: " + unallocatedBudget);
+        }
+
+        BudgetCategory newBudgetCategory = newBudget.getCategory();
+        Optional<Account> accountWithSameCategory = accounts.stream()
+                .filter(account -> account.getCategory() == newBudgetCategory)
+                .findFirst();
+
+        if (accountWithSameCategory.isEmpty()) {
+            throw new MismatchedCategoryException("Account with category " + newBudgetCategory + " does not exist");
+        }
+
+        Account account = accountWithSameCategory.get();
+        double balance = account.getBalance();
+        balance += newBudgetAmount;
+        account.setBalance(balance);
+        
+        unallocatedBudget -= newBudgetAmount;
+
+        newBudget.setAppUser(this);
+        budgets.add(newBudget);
+    }
 }
