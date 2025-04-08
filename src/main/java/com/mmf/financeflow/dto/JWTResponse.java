@@ -10,5 +10,4 @@ import java.util.Set;
 public class JWTResponse {
     private String token;
     private String username;
-    private Set<UserRole> roles;
 }

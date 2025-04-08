@@ -10,5 +10,4 @@ import java.util.Set;
 public class RegisterRequest {
     private String username;
     private String password;
-    private Set<UserRole> roles;
 }
