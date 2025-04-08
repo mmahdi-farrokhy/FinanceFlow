@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "budget")
@@ -29,4 +30,17 @@ public class Budget {
     @ManyToOne
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Budget budget = (Budget) o;
+        return Double.compare(amount, budget.amount) == 0 && Objects.equals(dateTime, budget.dateTime) && category == budget.category;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount, dateTime, category);
+    }
 }
