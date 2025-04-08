@@ -27,7 +27,7 @@ public class AppUserServiceImpl implements ClientService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public Optional<Client> registerAppUser(RegisterRequest registerRequest) {
+    public Optional<Client> registerClient(RegisterRequest registerRequest) {
         Client registeredAppUser = new Client();
         registeredAppUser.setUsername(registerRequest.getUsername());
         registeredAppUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));

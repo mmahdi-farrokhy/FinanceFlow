@@ -28,7 +28,7 @@ public class AppUserController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is already taken.");
         }
 
-        Optional<Client> createdUser = appUserService.registerAppUser(registerRequest);
+        Optional<Client> createdUser = appUserService.registerClient(registerRequest);
 
         if (createdUser.isPresent()) {
             return ResponseEntity.ok("User registered successfully.");

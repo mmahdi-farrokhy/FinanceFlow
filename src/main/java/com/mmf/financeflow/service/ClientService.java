@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Optional;
 
 public interface ClientService {
-    Optional<Client> registerAppUser(RegisterRequest registerRequest);
+    Optional<Client> registerClient(RegisterRequest registerRequest);
 
     boolean exitsByUsername(String username);
 
