@@ -1,6 +1,5 @@
 package com.mmf.financeflow.util;
 
-import com.mmf.financeflow.entity.UserRole;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;

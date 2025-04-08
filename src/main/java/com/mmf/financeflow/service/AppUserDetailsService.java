@@ -1,10 +1,8 @@
 package com.mmf.financeflow.service;
 
 import com.mmf.financeflow.entity.AppUser;
-import com.mmf.financeflow.entity.UserRole;
 import com.mmf.financeflow.repository.AppUserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

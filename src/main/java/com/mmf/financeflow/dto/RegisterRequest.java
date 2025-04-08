@@ -1,6 +1,5 @@
 package com.mmf.financeflow.dto;
 
-import com.mmf.financeflow.entity.UserRole;
 import lombok.Getter;
 import lombok.Setter;
 
