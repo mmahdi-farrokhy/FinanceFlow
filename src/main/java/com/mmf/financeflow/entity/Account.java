@@ -15,13 +15,17 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "account_name", nullable = false)
-    private String accountName;
-
-    @Column(name = "balance", nullable = false)
-    private BigDecimal balance;
+    @Column(name = "title", nullable = false)
+    private String title;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "category", nullable = false)
-    private FinancialCategory category;
+    private BudgetCategory category;
+
+    @Column(name = "balance", nullable = false)
+    private double balance;
+
+    @ManyToOne
+    @JoinColumn(name = "app_user_id")
+    private AppUser appUser;
 }
