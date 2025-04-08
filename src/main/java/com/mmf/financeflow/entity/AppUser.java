@@ -1,11 +1,12 @@
 package com.mmf.financeflow.entity;
 
+import com.mmf.financeflow.exception.DuplicatedAccountCategoryException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "app_user")
@@ -26,7 +27,7 @@ public class AppUser {
     private double unallocatedBudget;
 
     @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
-    private Set<Account> accounts;
+    private List<Account> accounts;
 
     @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
     private List<Income> incomes;
@@ -36,4 +37,21 @@ public class AppUser {
 
     @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
     private List<Budget> budgets;
+
+    public void addAccount(Account newAccount) {
+        if (accounts == null) {
+            accounts = new LinkedList<>();
+        }
+
+        List<BudgetCategory> accountCategories = accounts.stream()
+                .map(Account::getCategory)
+                .toList();
+
+        BudgetCategory newAccountCategory = newAccount.getCategory();
+        if (accountCategories.contains(newAccountCategory)) {
+            throw new DuplicatedAccountCategoryException("Account from category " + newAccountCategory + " already exists!");
+        } else {
+            accounts.add(newAccount);
+        }
+    }
 }
