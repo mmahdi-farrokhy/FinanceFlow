@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-import java.util.Set;
-
 @RestController
 @RequestMapping("api/auth")
 @AllArgsConstructor
@@ -28,9 +25,9 @@ public class ClientController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is already taken.");
         }
 
-        Optional<Client> createdUser = clientService.registerClient(registerRequest);
+        Client createdUser = clientService.registerClient(registerRequest);
 
-        if (createdUser.isPresent()) {
+        if (createdUser == null) {
             return ResponseEntity.ok("User registered successfully.");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Could not register the user.");
@@ -40,10 +37,10 @@ public class ClientController {
     @PostMapping("/login")
     public ResponseEntity<JWTResponse> login(@RequestBody LoginRequest loginRequest) {
         if (clientService.areLoginCredentialsValid(loginRequest)) {
-            JWTResponse jwtResponse = clientService.generateJWTResponse(loginRequest.getUsername());
+            JWTResponse jwtResponse = new JWTResponse("", loginRequest.getUsername());
             return ResponseEntity.ok(jwtResponse);
         } else {
-            JWTResponse invalidResponse = new JWTResponse("", loginRequest.getUsername(), Set.of());
+            JWTResponse invalidResponse = new JWTResponse("", loginRequest.getUsername());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(invalidResponse);
         }
     }
