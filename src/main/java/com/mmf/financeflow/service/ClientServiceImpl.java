@@ -104,11 +104,11 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Account createAccount(AccountRequest request, String username) {
+    public Account createAccount(AccountRequest request) {
         Account account = new Account(request.getTitle(), request.getCategory());
         BudgetCategory accountCategory = account.getCategory();
 
-        Client client = findClientByUsername(username);
+        Client client = findClientByUsername(request.getUsername());
 
         client.findAccountWithCategory(account.getCategory())
                 .ifPresent(acc -> {

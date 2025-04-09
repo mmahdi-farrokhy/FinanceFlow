@@ -14,5 +14,5 @@ public interface ClientService {
 
     Budget createBudget(BudgetRequest budgetRequest);
 
-    Account createAccount(AccountRequest accountRequest, String username);
+    Account createAccount(AccountRequest accountRequest);
 }
