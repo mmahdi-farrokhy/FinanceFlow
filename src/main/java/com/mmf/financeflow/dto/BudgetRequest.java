@@ -14,12 +14,5 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BudgetRequest {
     private double amount;
-    private LocalDateTime dateTime;
     private BudgetCategory category;
-
-    public BudgetRequest(double amount, BudgetCategory category) {
-        this.amount = amount;
-        this.category = category;
-        this.dateTime = LocalDateTime.now();
-    }
 }
