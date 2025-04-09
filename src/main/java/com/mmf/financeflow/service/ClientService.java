@@ -1,13 +1,7 @@
 package com.mmf.financeflow.service;
 
-import com.mmf.financeflow.dto.BudgetRequest;
-import com.mmf.financeflow.dto.ExpenseRequest;
-import com.mmf.financeflow.dto.IncomeRequest;
-import com.mmf.financeflow.dto.RegisterRequest;
-import com.mmf.financeflow.entity.Budget;
-import com.mmf.financeflow.entity.Client;
-import com.mmf.financeflow.entity.Expense;
-import com.mmf.financeflow.entity.Income;
+import com.mmf.financeflow.dto.*;
+import com.mmf.financeflow.entity.*;
 
 public interface ClientService {
     Client registerClient(RegisterRequest registerRequest);
@@ -19,4 +13,6 @@ public interface ClientService {
     Expense createExpense(ExpenseRequest expenseRequest);
 
     Budget createBudget(BudgetRequest budgetRequest);
+
+    Account createAccount(AccountRequest accountRequest);
 }
