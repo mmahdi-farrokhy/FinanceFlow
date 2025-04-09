@@ -30,6 +30,12 @@ public class Budget {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    public Budget(double amount, BudgetCategory category) {
+        this.amount = amount;
+        this.category = category;
+        this.dateTime = LocalDateTime.now();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
