@@ -42,6 +42,12 @@ public class Client {
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Budget> budgets;
 
+    public Client(String username, String password) {
+        this.username = username;
+        this.password = password;
+        this.unallocatedBudget = 0;
+    }
+
     public void addAccount(Account newAccount) {
         if (accounts == null) {
             accounts = new LinkedList<>();
