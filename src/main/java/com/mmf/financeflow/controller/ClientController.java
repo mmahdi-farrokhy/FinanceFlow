@@ -1,6 +1,8 @@
 package com.mmf.financeflow.controller;
 
+import com.mmf.financeflow.dto.IncomeRequest;
 import com.mmf.financeflow.dto.RegisterRequest;
+import com.mmf.financeflow.entity.Income;
 import com.mmf.financeflow.service.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,12 +19,17 @@ public class ClientController {
     private ClientService clientService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) {
-        if (clientService.existsByUsername(registerRequest.getUsername())) {
+    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
+        if (clientService.existsByUsername(request.getUsername())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is already taken.");
         }
 
-        clientService.registerClient(registerRequest);
+        clientService.registerClient(request);
         return ResponseEntity.ok("User registered successfully.");
+    }
+
+    @PostMapping("/create-income")
+    public ResponseEntity<Income> createIncome(@RequestBody IncomeRequest request) {
+        return ResponseEntity.ok(clientService.createIncome(request));
     }
 }
