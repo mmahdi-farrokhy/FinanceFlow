@@ -33,6 +33,13 @@ public class Expense {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    public Expense(double amount, String description, BudgetCategory category) {
+        this.amount = amount;
+        this.description = description;
+        this.category = category;
+        this.dateTime = LocalDateTime.now();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
