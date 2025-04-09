@@ -2,6 +2,7 @@ package com.mmf.financeflow.service;
 
 import com.mmf.financeflow.dto.*;
 import com.mmf.financeflow.entity.*;
+import com.mmf.financeflow.exception.InvalidAmountException;
 import com.mmf.financeflow.repository.ClientRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,6 +32,12 @@ public class ClientServiceImpl implements ClientService {
     public Income createIncome(IncomeRequest request, String username) {
         Income income = new Income(request.getAmount(), request.getDescription());
         Client client = findClientByUsername(username);
+
+        if (income.getAmount() <= 0) {
+            throw new InvalidAmountException("Income amount should be greater than 0!");
+        }
+
+        client.increaseUnallocatedBudget(income);
         client.addIncome(income);
         clientRepository.save(client);
         return income;
