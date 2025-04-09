@@ -1,0 +1,216 @@
+{
+	"info": {
+		"_postman_id": "516e7edb-a205-4729-a220-b830a64af57b",
+		"name": "FinanceFlowAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30025085",
+		"_collection_link": "https://grey-comet-343259.postman.co/workspace/Team-Workspace~668e5cdd-bb61-4581-8f21-b4c489ec0847/collection/30025085-516e7edb-a205-4729-a220-b830a64af57b?action=share&source=collection_link&creator=30025085"
+	},
+	"item": [
+		{
+			"name": "RegisterClient",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"mmahdi_farrokhy\",\r\n    \"password\": \"12341234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7777/api/client/register",
+					"host": [
+						"localhost"
+					],
+					"port": "7777",
+					"path": [
+						"api",
+						"client",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateIncome",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "12341234",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "mmahdi_farrokhy",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 25000000,\r\n    \"description\" : \"Salary\",\r\n    \"username\": \"mmf\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7777/api/client/create-income",
+					"host": [
+						"localhost"
+					],
+					"port": "7777",
+					"path": [
+						"api",
+						"client",
+						"create-income"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateExpense",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "mmf",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 20000000,\r\n    \"description\": \"Buy a new PC Chair\",\r\n    \"category\": \"NEEDS\",\r\n    \"username\": \"mmf\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7777/api/client/create-expense",
+					"host": [
+						"localhost"
+					],
+					"port": "7777",
+					"path": [
+						"api",
+						"client",
+						"create-expense"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateAccount",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "mmf",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"BluBank\",\r\n    \"category\": \"NEEDS\",\r\n    \"username\": \"mmf\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7777/api/client/create-account",
+					"host": [
+						"localhost"
+					],
+					"port": "7777",
+					"path": [
+						"api",
+						"client",
+						"create-account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateBudget",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "mmf",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 23000000,\r\n    \"category\": \"NEEDS\",\r\n    \"username\": \"mmf\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7777/api/client/create-budget",
+					"host": [
+						"localhost"
+					],
+					"port": "7777",
+					"path": [
+						"api",
+						"client",
+						"create-budget"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
