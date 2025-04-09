@@ -1,4 +1,4 @@
-package com.mmf.financeflow.service;
+package com.mmf.financeflow.security;
 
 import com.mmf.financeflow.entity.Client;
 import com.mmf.financeflow.repository.ClientRepository;
