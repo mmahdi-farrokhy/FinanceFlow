@@ -72,12 +72,6 @@ public class Client {
             incomes = new LinkedList<>();
         }
 
-        if (newIncome.getAmount() <= 0) {
-            throw new InvalidAmountException("Income amount should be greater than 0!");
-        }
-
-        unallocatedBudget += newIncome.getAmount();
-
         newIncome.setClient(this);
         incomes.add(newIncome);
     }
@@ -147,5 +141,9 @@ public class Client {
 
         newBudget.setClient(this);
         budgets.add(newBudget);
+    }
+
+    public void increaseUnallocatedBudget(Income income) {
+        setUnallocatedBudget(unallocatedBudget);
     }
 }
