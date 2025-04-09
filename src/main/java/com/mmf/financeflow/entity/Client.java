@@ -1,6 +1,5 @@
 package com.mmf.financeflow.entity;
 
-import com.mmf.financeflow.exception.DuplicatedAccountCategoryException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -49,18 +48,8 @@ public class Client {
             accounts = new LinkedList<>();
         }
 
-        List<BudgetCategory> accountCategories =
-                accounts.stream()
-                        .map(Account::getCategory)
-                        .toList();
-
-        BudgetCategory newAccountCategory = newAccount.getCategory();
-        if (accountCategories.contains(newAccountCategory)) {
-            throw new DuplicatedAccountCategoryException("Account from category " + newAccountCategory + " already exists!");
-        } else {
-            newAccount.setClient(this);
-            accounts.add(newAccount);
-        }
+        newAccount.setClient(this);
+        accounts.add(newAccount);
     }
 
     public void addIncome(Income newIncome) {

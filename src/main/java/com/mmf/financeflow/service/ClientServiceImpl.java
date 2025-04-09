@@ -2,6 +2,7 @@ package com.mmf.financeflow.service;
 
 import com.mmf.financeflow.dto.*;
 import com.mmf.financeflow.entity.*;
+import com.mmf.financeflow.exception.DuplicatedAccountCategoryException;
 import com.mmf.financeflow.exception.InsufficientBalanceException;
 import com.mmf.financeflow.exception.InvalidAmountException;
 import com.mmf.financeflow.exception.MismatchedCategoryException;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -121,6 +123,17 @@ public class ClientServiceImpl implements ClientService {
     public Account createAccount(AccountRequest request, String username) {
         Account account = new Account(request.getTitle(), request.getCategory());
         Client client = findClientByUsername(username);
+
+        List<BudgetCategory> accountCategories =
+                client.getAccounts().stream()
+                        .map(Account::getCategory)
+                        .toList();
+
+        BudgetCategory newAccountCategory = account.getCategory();
+        if (accountCategories.contains(newAccountCategory)) {
+            throw new DuplicatedAccountCategoryException("Account from category " + newAccountCategory + " already exists!");
+        }
+
         client.addAccount(account);
         clientRepository.save(client);
         return account;
