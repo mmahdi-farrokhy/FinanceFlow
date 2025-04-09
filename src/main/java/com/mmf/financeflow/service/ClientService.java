@@ -8,7 +8,7 @@ public interface ClientService {
 
     boolean existsByUsername(String username);
 
-    Income createIncome(IncomeRequest incomeRequest, String username);
+    Income createIncome(IncomeRequest incomeRequest);
 
     Expense createExpense(ExpenseRequest expenseRequest, String username);
 
