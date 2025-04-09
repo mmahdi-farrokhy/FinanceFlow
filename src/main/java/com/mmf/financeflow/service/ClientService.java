@@ -1,8 +1,10 @@
 package com.mmf.financeflow.service;
 
+import com.mmf.financeflow.dto.ExpenseRequest;
 import com.mmf.financeflow.dto.IncomeRequest;
 import com.mmf.financeflow.dto.RegisterRequest;
 import com.mmf.financeflow.entity.Client;
+import com.mmf.financeflow.entity.Expense;
 import com.mmf.financeflow.entity.Income;
 
 public interface ClientService {
@@ -11,4 +13,6 @@ public interface ClientService {
     boolean existsByUsername(String username);
 
     Income createIncome(IncomeRequest incomeRequest);
+
+    Expense createExpense(ExpenseRequest expenseRequest);
 }
