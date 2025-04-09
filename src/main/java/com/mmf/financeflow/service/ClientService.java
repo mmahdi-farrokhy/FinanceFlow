@@ -6,5 +6,5 @@ import com.mmf.financeflow.entity.Client;
 public interface ClientService {
     Client registerClient(RegisterRequest registerRequest);
 
-    boolean exitsByUsername(String username);
+    boolean existsByUsername(String username);
 }

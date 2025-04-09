@@ -22,7 +22,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public boolean exitsByUsername(String username) {
+    public boolean existsByUsername(String username) {
         return clientRepository.existsByUsername(username);
     }
 }

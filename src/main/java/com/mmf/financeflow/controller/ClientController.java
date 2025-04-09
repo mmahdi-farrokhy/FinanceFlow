@@ -21,7 +21,7 @@ public class ClientController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) {
-        if (clientService.exitsByUsername(registerRequest.getUsername())) {
+        if (clientService.existsByUsername(registerRequest.getUsername())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is already taken.");
         }
 
