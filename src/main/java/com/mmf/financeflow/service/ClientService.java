@@ -10,7 +10,7 @@ public interface ClientService {
 
     Income createIncome(IncomeRequest incomeRequest);
 
-    Expense createExpense(ExpenseRequest expenseRequest, String username);
+    Expense createExpense(ExpenseRequest expenseRequest);
 
     Budget createBudget(BudgetRequest budgetRequest, String username);
 
