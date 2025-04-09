@@ -76,12 +76,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Budget createBudget(BudgetRequest request, String username) {
+    public Budget createBudget(BudgetRequest request) {
         Budget budget = new Budget(request.getAmount(), request.getCategory());
         double budgetAmount = budget.getAmount();
         BudgetCategory budgetCategory = budget.getCategory();
 
-        Client client = findClientByUsername(username);
+        Client client = findClientByUsername(request.getUsername());
         double unallocatedBudget = client.getUnallocatedBudget();
 
         if (budgetAmount <= 0) {

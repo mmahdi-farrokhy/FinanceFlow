@@ -12,7 +12,7 @@ public interface ClientService {
 
     Expense createExpense(ExpenseRequest expenseRequest);
 
-    Budget createBudget(BudgetRequest budgetRequest, String username);
+    Budget createBudget(BudgetRequest budgetRequest);
 
     Account createAccount(AccountRequest accountRequest, String username);
 }
