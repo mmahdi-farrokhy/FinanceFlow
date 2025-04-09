@@ -19,11 +19,11 @@ public class ClientServiceImpl implements ClientService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public Client registerClient(RegisterRequest registerRequest) {
+    public void registerClient(RegisterRequest registerRequest) {
         String username = registerRequest.getUsername();
         String encodedPassword = passwordEncoder.encode(registerRequest.getPassword());
         Client registeredClient = new Client(username, encodedPassword);
-        return clientRepository.save(registeredClient);
+        clientRepository.save(registeredClient);
     }
 
     @Override

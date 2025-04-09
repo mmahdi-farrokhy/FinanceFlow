@@ -4,7 +4,7 @@ import com.mmf.financeflow.dto.*;
 import com.mmf.financeflow.entity.*;
 
 public interface ClientService {
-    Client registerClient(RegisterRequest registerRequest);
+    void registerClient(RegisterRequest registerRequest);
 
     boolean existsByUsername(String username);
 
