@@ -2,6 +2,7 @@ package com.mmf.financeflow.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.util.Objects;
 @Table(name = "income")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Income {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

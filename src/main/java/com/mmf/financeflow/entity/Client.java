@@ -2,6 +2,7 @@ package com.mmf.financeflow.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.LinkedList;
@@ -12,6 +13,7 @@ import java.util.Optional;
 @Table(name = "client")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
