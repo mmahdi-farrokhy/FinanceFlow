@@ -12,8 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @AllArgsConstructor
 public class ClientServiceImpl implements ClientService {
@@ -38,11 +36,12 @@ public class ClientServiceImpl implements ClientService {
         Income income = new Income(request.getAmount(), request.getDescription());
         Client client = findClientByUsername(username);
 
-        if (income.getAmount() <= 0) {
+        double incomeAmount = income.getAmount();
+        if (incomeAmount <= 0) {
             throw new InvalidAmountException("Income amount should be greater than 0!");
         }
 
-        client.increaseUnallocatedBudget(income.getAmount());
+        client.increaseUnallocatedBudget(incomeAmount);
         client.addIncome(income);
         clientRepository.save(client);
         return income;
@@ -51,25 +50,25 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Expense createExpense(ExpenseRequest request, String username) {
         Expense expense = new Expense(request.getAmount(), request.getDescription(), request.getCategory());
-        Client client = findClientByUsername(username);
-        BudgetCategory newExpenseCategory = expense.getCategory();
-
         double expenseAmount = expense.getAmount();
+        BudgetCategory expenseCategory = expense.getCategory();
+
+        Client client = findClientByUsername(username);
+
         if (expenseAmount <= 0) {
             throw new InvalidAmountException("Expense amount should be greater than 0!");
         }
 
-        Account account = findAccountWithCategory(client, newExpenseCategory)
-                .orElseThrow(() -> new MismatchedCategoryException("Account with category " + newExpenseCategory + " does not exist"));
+        Account account = client.findAccountWithCategory(expenseCategory)
+                .orElseThrow(() -> new MismatchedCategoryException("Account with category " + expenseCategory + " does not exist"));
 
-        double balance = account.getBalance();
+        double accountBalance = account.getBalance();
 
-        if (balance < expenseAmount) {
-            throw new InsufficientBalanceException("Expense amount " + expenseAmount + " is more than balance of " + newExpenseCategory + " account: " + balance);
+        if (accountBalance < expenseAmount) {
+            throw new InsufficientBalanceException("Expense amount " + expenseAmount + " is more than balance of " + expenseCategory + " account: " + accountBalance);
         }
 
-        balance -= expenseAmount;
-        account.setBalance(balance);
+        account.decreaseBalance(expenseAmount);
 
         client.addExpense(expense);
         clientRepository.save(client);
@@ -79,26 +78,25 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Budget createBudget(BudgetRequest request, String username) {
         Budget budget = new Budget(request.getAmount(), request.getCategory());
-        double newBudgetAmount = budget.getAmount();
+        double budgetAmount = budget.getAmount();
         BudgetCategory budgetCategory = budget.getCategory();
 
         Client client = findClientByUsername(username);
         double unallocatedBudget = client.getUnallocatedBudget();
 
-        if (newBudgetAmount <= 0) {
+        if (budgetAmount <= 0) {
             throw new InvalidAmountException("Budget amount should be greater than 0!");
         }
 
-        if (newBudgetAmount > unallocatedBudget) {
-            throw new InsufficientBalanceException("Budget amount " + newBudgetAmount + " is more than unallocated budget: " + unallocatedBudget);
+        if (budgetAmount > unallocatedBudget) {
+            throw new InsufficientBalanceException("Budget amount " + budgetAmount + " is more than unallocated budget: " + unallocatedBudget);
         }
 
-
-        Account account = findAccountWithCategory(client, budgetCategory)
+        Account account = client.findAccountWithCategory(budgetCategory)
                 .orElseThrow(() -> new MismatchedCategoryException("Account with category " + budgetCategory + " does not exist"));
 
-        account.increaseBalance(newBudgetAmount);
-        client.decreaseUnallocatedBudget(newBudgetAmount);
+        account.increaseBalance(budgetAmount);
+        client.decreaseUnallocatedBudget(budgetAmount);
 
         client.addBudget(budget);
         clientRepository.save(client);
@@ -112,7 +110,7 @@ public class ClientServiceImpl implements ClientService {
 
         Client client = findClientByUsername(username);
 
-        findAccountWithCategory(client, account.getCategory())
+        client.findAccountWithCategory(account.getCategory())
                 .ifPresent(acc -> {
                     throw new DuplicatedAccountCategoryException("Account from category " + accountCategory + " already exists!");
                 });
@@ -125,11 +123,5 @@ public class ClientServiceImpl implements ClientService {
     private Client findClientByUsername(String username) {
         return clientRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found!"));
-    }
-
-    private static Optional<Account> findAccountWithCategory(Client client, BudgetCategory newExpenseCategory) {
-        return client.getAccounts().stream()
-                .filter(account -> account.getCategory() == newExpenseCategory)
-                .findFirst();
     }
 }
