@@ -81,30 +81,6 @@ public class Client {
             expenses = new LinkedList<>();
         }
 
-        double newExpenseAmount = newExpense.getAmount();
-        if (newExpenseAmount <= 0) {
-            throw new InvalidAmountException("Expense amount should be greater than 0!");
-        }
-
-        BudgetCategory newExpenseCategory = newExpense.getCategory();
-        Optional<Account> accountWithSameCategory = accounts.stream()
-                .filter(account -> account.getCategory() == newExpenseCategory)
-                .findFirst();
-
-        if (accountWithSameCategory.isEmpty()) {
-            throw new MismatchedCategoryException("Account with category " + newExpenseCategory + " does not exist");
-        }
-
-        Account account = accountWithSameCategory.get();
-        double balance = account.getBalance();
-
-        if (balance < newExpenseAmount) {
-            throw new InsufficientBalanceException("Expense amount " + newExpenseAmount + " is more than balance of " + newExpenseCategory + " account: " + balance);
-        }
-
-        balance -= newExpenseAmount;
-        account.setBalance(balance);
-
         newExpense.setClient(this);
         expenses.add(newExpense);
     }

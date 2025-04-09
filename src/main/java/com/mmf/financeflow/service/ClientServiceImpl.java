@@ -2,12 +2,16 @@ package com.mmf.financeflow.service;
 
 import com.mmf.financeflow.dto.*;
 import com.mmf.financeflow.entity.*;
+import com.mmf.financeflow.exception.InsufficientBalanceException;
 import com.mmf.financeflow.exception.InvalidAmountException;
+import com.mmf.financeflow.exception.MismatchedCategoryException;
 import com.mmf.financeflow.repository.ClientRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -47,6 +51,31 @@ public class ClientServiceImpl implements ClientService {
     public Expense createExpense(ExpenseRequest request, String username) {
         Expense expense = new Expense(request.getAmount(), request.getDescription(), request.getCategory());
         Client client = findClientByUsername(username);
+
+        double expenseAmount = expense.getAmount();
+        if (expenseAmount <= 0) {
+            throw new InvalidAmountException("Expense amount should be greater than 0!");
+        }
+
+        BudgetCategory newExpenseCategory = expense.getCategory();
+        Optional<Account> accountWithSameCategory = client.getAccounts().stream()
+                .filter(account -> account.getCategory() == newExpenseCategory)
+                .findFirst();
+
+        if (accountWithSameCategory.isEmpty()) {
+            throw new MismatchedCategoryException("Account with category " + newExpenseCategory + " does not exist");
+        }
+
+        Account account = accountWithSameCategory.get();
+        double balance = account.getBalance();
+
+        if (balance < expenseAmount) {
+            throw new InsufficientBalanceException("Expense amount " + expenseAmount + " is more than balance of " + newExpenseCategory + " account: " + balance);
+        }
+
+        balance -= expenseAmount;
+        account.setBalance(balance);
+
         client.addExpense(expense);
         clientRepository.save(client);
         return expense;
