@@ -1,7 +1,9 @@
 package com.mmf.financeflow.controller;
 
+import com.mmf.financeflow.dto.ExpenseRequest;
 import com.mmf.financeflow.dto.IncomeRequest;
 import com.mmf.financeflow.dto.RegisterRequest;
+import com.mmf.financeflow.entity.Expense;
 import com.mmf.financeflow.entity.Income;
 import com.mmf.financeflow.service.ClientService;
 import lombok.AllArgsConstructor;
@@ -31,5 +33,10 @@ public class ClientController {
     @PostMapping("/create-income")
     public ResponseEntity<Income> createIncome(@RequestBody IncomeRequest request) {
         return ResponseEntity.ok(clientService.createIncome(request));
+    }
+
+    @PostMapping("/create-expense")
+    public ResponseEntity<Expense> createExpense(@RequestBody ExpenseRequest expenseRequest) {
+        return ResponseEntity.ok(clientService.createExpense(expenseRequest));
     }
 }
