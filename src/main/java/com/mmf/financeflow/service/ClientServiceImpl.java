@@ -1,8 +1,10 @@
 package com.mmf.financeflow.service;
 
+import com.mmf.financeflow.dto.BudgetRequest;
 import com.mmf.financeflow.dto.ExpenseRequest;
 import com.mmf.financeflow.dto.IncomeRequest;
 import com.mmf.financeflow.dto.RegisterRequest;
+import com.mmf.financeflow.entity.Budget;
 import com.mmf.financeflow.entity.Client;
 import com.mmf.financeflow.entity.Expense;
 import com.mmf.financeflow.entity.Income;
@@ -41,12 +43,21 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Expense createExpense(ExpenseRequest expenseRequest, String username) {
-        Expense expense = new Expense(expenseRequest.getAmount(), expenseRequest.getDescription(), expenseRequest.getCategory());
+    public Expense createExpense(ExpenseRequest request, String username) {
+        Expense expense = new Expense(request.getAmount(), request.getDescription(), request.getCategory());
         Client client = findClientByUsername(username);
         client.addExpense(expense);
         clientRepository.save(client);
         return expense;
+    }
+
+    @Override
+    public Budget createBudget(BudgetRequest request, String username) {
+        Budget budget = new Budget(request.getAmount(), request.getCategory());
+        Client client = findClientByUsername(username);
+        client.addBudget(budget);
+        clientRepository.save(client);
+        return budget;
     }
 
     private Client findClientByUsername(String username) {
