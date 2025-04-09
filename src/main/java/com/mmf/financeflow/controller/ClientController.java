@@ -1,7 +1,6 @@
 package com.mmf.financeflow.controller;
 
 import com.mmf.financeflow.dto.RegisterRequest;
-import com.mmf.financeflow.entity.Client;
 import com.mmf.financeflow.service.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,12 +22,7 @@ public class ClientController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is already taken.");
         }
 
-        Client createdUser = clientService.registerClient(registerRequest);
-
-        if (createdUser == null) {
-            return ResponseEntity.ok("User registered successfully.");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Could not register the user.");
-        }
+        clientService.registerClient(registerRequest);
+        return ResponseEntity.ok("User registered successfully.");
     }
 }
