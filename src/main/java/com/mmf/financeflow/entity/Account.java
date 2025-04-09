@@ -47,4 +47,12 @@ public class Account {
     public int hashCode() {
         return Objects.hash(title, category, balance);
     }
+
+    public void increaseBalance(double amount) {
+        balance += amount;
+    }
+
+    public void decreaseBalance(double amount) {
+        balance -= amount;
+    }
 }
