@@ -41,7 +41,7 @@ public class ClientServiceImpl implements ClientService {
             throw new InvalidAmountException("Income amount should be greater than 0!");
         }
 
-        client.increaseUnallocatedBudget(income);
+        client.increaseUnallocatedBudget(income.getAmount());
         client.addIncome(income);
         clientRepository.save(client);
         return income;
@@ -85,6 +85,33 @@ public class ClientServiceImpl implements ClientService {
     public Budget createBudget(BudgetRequest request, String username) {
         Budget budget = new Budget(request.getAmount(), request.getCategory());
         Client client = findClientByUsername(username);
+        double unallocatedBudget = client.getUnallocatedBudget();
+        double newBudgetAmount = budget.getAmount();
+
+        if (newBudgetAmount <= 0) {
+            throw new InvalidAmountException("Budget amount should be greater than 0!");
+        }
+
+        if (newBudgetAmount > unallocatedBudget) {
+            throw new InsufficientBalanceException("Budget amount " + newBudgetAmount + " is more than unallocated budget: " + unallocatedBudget);
+        }
+
+        BudgetCategory newBudgetCategory = budget.getCategory();
+        Optional<Account> accountWithSameCategory = client.getAccounts().stream()
+                .filter(account -> account.getCategory() == newBudgetCategory)
+                .findFirst();
+
+        if (accountWithSameCategory.isEmpty()) {
+            throw new MismatchedCategoryException("Account with category " + newBudgetCategory + " does not exist");
+        }
+
+        Account account = accountWithSameCategory.get();
+        double balance = account.getBalance();
+        balance += newBudgetAmount;
+        account.setBalance(balance);
+
+        client.decreaseUnallocatedBudget(newBudgetAmount);
+
         client.addBudget(budget);
         clientRepository.save(client);
         return budget;

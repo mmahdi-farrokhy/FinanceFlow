@@ -1,16 +1,12 @@
 package com.mmf.financeflow.entity;
 
 import com.mmf.financeflow.exception.DuplicatedAccountCategoryException;
-import com.mmf.financeflow.exception.InsufficientBalanceException;
-import com.mmf.financeflow.exception.InvalidAmountException;
-import com.mmf.financeflow.exception.MismatchedCategoryException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
 @Table(name = "client")
@@ -90,36 +86,15 @@ public class Client {
             budgets = new LinkedList<>();
         }
 
-        double newBudgetAmount = newBudget.getAmount();
-        if (newBudgetAmount <= 0) {
-            throw new InvalidAmountException("Budget amount should be greater than 0!");
-        }
-
-        if (newBudgetAmount > unallocatedBudget) {
-            throw new InsufficientBalanceException("Budget amount " + newBudgetAmount + " is more than unallocated budget: " + unallocatedBudget);
-        }
-
-        BudgetCategory newBudgetCategory = newBudget.getCategory();
-        Optional<Account> accountWithSameCategory = accounts.stream()
-                .filter(account -> account.getCategory() == newBudgetCategory)
-                .findFirst();
-
-        if (accountWithSameCategory.isEmpty()) {
-            throw new MismatchedCategoryException("Account with category " + newBudgetCategory + " does not exist");
-        }
-
-        Account account = accountWithSameCategory.get();
-        double balance = account.getBalance();
-        balance += newBudgetAmount;
-        account.setBalance(balance);
-
-        unallocatedBudget -= newBudgetAmount;
-
         newBudget.setClient(this);
         budgets.add(newBudget);
     }
 
-    public void increaseUnallocatedBudget(Income income) {
-        setUnallocatedBudget(unallocatedBudget);
+    public void increaseUnallocatedBudget(double amount) {
+        unallocatedBudget += amount;
+    }
+
+    public void decreaseUnallocatedBudget(double amount) {
+        unallocatedBudget -= amount;
     }
 }
