@@ -29,6 +29,12 @@ public class Income {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    public Income(double amount, String description) {
+        this.amount = amount;
+        this.description = description;
+        this.dateTime = LocalDateTime.now();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
