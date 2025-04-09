@@ -1,8 +1,10 @@
 package com.mmf.financeflow.service;
 
+import com.mmf.financeflow.dto.ExpenseRequest;
 import com.mmf.financeflow.dto.IncomeRequest;
 import com.mmf.financeflow.dto.RegisterRequest;
 import com.mmf.financeflow.entity.Client;
+import com.mmf.financeflow.entity.Expense;
 import com.mmf.financeflow.entity.Income;
 import com.mmf.financeflow.repository.ClientRepository;
 import lombok.AllArgsConstructor;
@@ -32,10 +34,23 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Income createIncome(IncomeRequest request, String username) {
         Income income = new Income(request.getAmount(), request.getDescription());
-        Client client = clientRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found!"));
+        Client client = findClientByUsername(username);
         client.addIncome(income);
         clientRepository.save(client);
         return income;
+    }
+
+    @Override
+    public Expense createExpense(ExpenseRequest expenseRequest, String username) {
+        Expense expense = new Expense(expenseRequest.getAmount(), expenseRequest.getDescription(), expenseRequest.getCategory());
+        Client client = findClientByUsername(username);
+        client.addExpense(expense);
+        clientRepository.save(client);
+        return expense;
+    }
+
+    private Client findClientByUsername(String username) {
+        return clientRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found!"));
     }
 }
