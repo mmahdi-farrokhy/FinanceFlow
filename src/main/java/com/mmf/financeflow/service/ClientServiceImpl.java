@@ -1,13 +1,7 @@
 package com.mmf.financeflow.service;
 
-import com.mmf.financeflow.dto.BudgetRequest;
-import com.mmf.financeflow.dto.ExpenseRequest;
-import com.mmf.financeflow.dto.IncomeRequest;
-import com.mmf.financeflow.dto.RegisterRequest;
-import com.mmf.financeflow.entity.Budget;
-import com.mmf.financeflow.entity.Client;
-import com.mmf.financeflow.entity.Expense;
-import com.mmf.financeflow.entity.Income;
+import com.mmf.financeflow.dto.*;
+import com.mmf.financeflow.entity.*;
 import com.mmf.financeflow.repository.ClientRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -58,6 +52,15 @@ public class ClientServiceImpl implements ClientService {
         client.addBudget(budget);
         clientRepository.save(client);
         return budget;
+    }
+
+    @Override
+    public Account createAccount(AccountRequest request, String username) {
+        Account account = new Account(request.getTitle(), request.getCategory());
+        Client client = findClientByUsername(username);
+        client.addAccount(account);
+        clientRepository.save(client);
+        return account;
     }
 
     private Client findClientByUsername(String username) {
