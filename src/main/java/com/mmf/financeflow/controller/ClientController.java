@@ -1,7 +1,5 @@
 package com.mmf.financeflow.controller;
 
-import com.mmf.financeflow.dto.JWTResponse;
-import com.mmf.financeflow.dto.LoginRequest;
 import com.mmf.financeflow.dto.RegisterRequest;
 import com.mmf.financeflow.entity.Client;
 import com.mmf.financeflow.service.ClientService;
@@ -31,17 +29,6 @@ public class ClientController {
             return ResponseEntity.ok("User registered successfully.");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Could not register the user.");
-        }
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<JWTResponse> login(@RequestBody LoginRequest loginRequest) {
-        if (clientService.areLoginCredentialsValid(loginRequest)) {
-            JWTResponse jwtResponse = new JWTResponse("", loginRequest.getUsername());
-            return ResponseEntity.ok(jwtResponse);
-        } else {
-            JWTResponse invalidResponse = new JWTResponse("", loginRequest.getUsername());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(invalidResponse);
         }
     }
 }
