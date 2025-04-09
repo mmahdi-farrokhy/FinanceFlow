@@ -29,6 +29,12 @@ public class Account {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    public Account(String title, BudgetCategory category) {
+        this.title = title;
+        this.category = category;
+        this.balance = 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
