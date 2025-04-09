@@ -11,6 +11,5 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class IncomeRequest {
     private double amount;
-    private LocalDateTime dateTime;
     private String description;
 }
