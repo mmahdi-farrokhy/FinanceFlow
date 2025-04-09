@@ -1,9 +1,7 @@
 package com.mmf.financeflow.controller;
 
-import com.mmf.financeflow.dto.BudgetRequest;
-import com.mmf.financeflow.dto.ExpenseRequest;
-import com.mmf.financeflow.dto.IncomeRequest;
-import com.mmf.financeflow.dto.RegisterRequest;
+import com.mmf.financeflow.dto.*;
+import com.mmf.financeflow.entity.Account;
 import com.mmf.financeflow.entity.Budget;
 import com.mmf.financeflow.entity.Expense;
 import com.mmf.financeflow.entity.Income;
@@ -45,5 +43,10 @@ public class ClientController {
     @PostMapping("/create-budget")
     public ResponseEntity<Budget> createBudget(@RequestBody BudgetRequest request) {
         return ResponseEntity.ok(clientService.createBudget(request));
+    }
+
+    @PostMapping("/create-account")
+    public ResponseEntity<Account> createAccount(@RequestBody AccountRequest request) {
+        return ResponseEntity.ok(clientService.createAccount(request));
     }
 }
