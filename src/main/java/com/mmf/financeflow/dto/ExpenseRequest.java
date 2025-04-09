@@ -15,13 +15,5 @@ import java.time.LocalDateTime;
 public class ExpenseRequest {
     private double amount;
     private String description;
-    private LocalDateTime dateTime;
     private BudgetCategory category;
-
-    public ExpenseRequest(double amount, String description, BudgetCategory category) {
-        this.amount = amount;
-        this.description = description;
-        this.category = category;
-        this.dateTime = LocalDateTime.now();
-    }
 }
