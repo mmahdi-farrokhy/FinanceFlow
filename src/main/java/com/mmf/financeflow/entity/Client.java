@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "client")
@@ -85,5 +86,11 @@ public class Client {
 
     public void decreaseUnallocatedBudget(double amount) {
         unallocatedBudget -= amount;
+    }
+
+    public Optional<Account> findAccountWithCategory(BudgetCategory newExpenseCategory) {
+        return getAccounts().stream()
+                .filter(account -> account.getCategory() == newExpenseCategory)
+                .findFirst();
     }
 }
