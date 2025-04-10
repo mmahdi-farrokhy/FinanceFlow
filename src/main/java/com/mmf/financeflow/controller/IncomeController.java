@@ -5,10 +5,11 @@ import com.mmf.financeflow.entity.Income;
 import com.mmf.financeflow.service.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.mmf.financeflow.util.SecurityUtil.getUsernameFromAuthenticationContext;
 
 @RestController
 @RequestMapping("/api/income")
@@ -26,9 +27,5 @@ public class IncomeController {
     public ResponseEntity<List<Income>> getIncomes() {
         String username = getUsernameFromAuthenticationContext();
         return ResponseEntity.ok(clientService.getIncomes(username));
-    }
-
-    private static String getUsernameFromAuthenticationContext() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }
