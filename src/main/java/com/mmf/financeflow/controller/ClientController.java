@@ -51,7 +51,8 @@ public class ClientController {
 
     @PostMapping("/create-account")
     public ResponseEntity<Account> createAccount(@RequestBody AccountRequest request) {
-        return ResponseEntity.ok(clientService.createAccount(request));
+        String username = getUsernameFromAuthenticationContext();
+        return ResponseEntity.ok(clientService.createAccount(request, username));
     }
 
     private static String getUsernameFromAuthenticationContext() {
