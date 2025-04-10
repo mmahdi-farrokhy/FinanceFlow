@@ -10,25 +10,25 @@ public interface ClientService {
 
     boolean existsByUsername(String username);
 
-    Income createIncome(IncomeRequest incomeRequest, String username);
+    public Client findClientByUsername(String username);
+
+    void save(Client client);
 
     Expense createExpense(ExpenseRequest expenseRequest, String username);
 
-    Budget createBudget(BudgetRequest budgetRequest, String username);
-
-    Account createAccount(AccountRequest accountRequest, String username);
-
-    List<Income> getIncomes(String username);
-
     List<Expense> getExpenses(String username);
-
-    List<Budget> getBudgets(String username);
-
-    List<Account> getAccounts(String username);
 
     List<Expense> getExpensesByCategory(String username, BudgetCategory category);
 
+    Budget createBudget(BudgetRequest budgetRequest, String username);
+
+    List<Budget> getBudgets(String username);
+
     List<Budget> getBudgetsByCategory(String username, BudgetCategory category);
+
+    Account createAccount(AccountRequest accountRequest, String username);
+
+    List<Account> getAccounts(String username);
 
     Account getAccountByType(String username, BudgetCategory category);
 }

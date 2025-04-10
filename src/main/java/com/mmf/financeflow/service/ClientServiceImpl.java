@@ -1,6 +1,9 @@
 package com.mmf.financeflow.service;
 
-import com.mmf.financeflow.dto.*;
+import com.mmf.financeflow.dto.AccountRequest;
+import com.mmf.financeflow.dto.BudgetRequest;
+import com.mmf.financeflow.dto.ExpenseRequest;
+import com.mmf.financeflow.dto.RegisterRequest;
 import com.mmf.financeflow.entity.*;
 import com.mmf.financeflow.exception.DuplicatedAccountCategoryException;
 import com.mmf.financeflow.exception.InsufficientBalanceException;
@@ -34,19 +37,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Income createIncome(IncomeRequest request, String username) {
-        Income income = new Income(request.getAmount(), request.getDescription());
-        Client client = findClientByUsername(username);
-
-        double incomeAmount = income.getAmount();
-        if (incomeAmount <= 0) {
-            throw new InvalidAmountException("Income amount should be greater than 0!");
-        }
-
-        client.increaseUnallocatedBudget(incomeAmount);
-        client.addIncome(income);
+    public void save(Client client) {
         clientRepository.save(client);
-        return income;
     }
 
     @Override
@@ -78,6 +70,16 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public List<Expense> getExpenses(String username) {
+        return clientRepository.findExpensesByUsername(username);
+    }
+
+    @Override
+    public List<Expense> getExpensesByCategory(String username, BudgetCategory category) {
+        return clientRepository.findExpensesByUsernameAndCategory(username, category);
+    }
+
+    @Override
     public Budget createBudget(BudgetRequest request, String username) {
         Budget budget = new Budget(request.getAmount(), request.getCategory());
         double budgetAmount = budget.getAmount();
@@ -106,6 +108,16 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public List<Budget> getBudgets(String username) {
+        return clientRepository.findBudgetsByUsername(username);
+    }
+
+    @Override
+    public List<Budget> getBudgetsByCategory(String username, BudgetCategory category) {
+        return clientRepository.findBudgetsByUsernameAndCategory(username, category);
+    }
+
+    @Override
     public Account createAccount(AccountRequest request, String username) {
         Account account = new Account(request.getTitle(), request.getCategory());
         BudgetCategory accountCategory = account.getCategory();
@@ -130,33 +142,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Income> getIncomes(String username) {
-        return clientRepository.findIncomesByUsername(username);
-    }
-
-    @Override
-    public List<Expense> getExpenses(String username) {
-        return clientRepository.findExpensesByUsername(username);
-    }
-
-    @Override
-    public List<Budget> getBudgets(String username) {
-        return clientRepository.findBudgetsByUsername(username);
-    }
-
-    @Override
     public List<Account> getAccounts(String username) {
         return clientRepository.findAccountsByUsername(username);
-    }
-
-    @Override
-    public List<Expense> getExpensesByCategory(String username, BudgetCategory category) {
-        return clientRepository.findExpensesByUsernameAndCategory(username, category);
-    }
-
-    @Override
-    public List<Budget> getBudgetsByCategory(String username, BudgetCategory category) {
-        return clientRepository.findBudgetsByUsernameAndCategory(username, category);
     }
 
     @Override
@@ -164,7 +151,8 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.findAccountByUsernameAndCategory(username, category);
     }
 
-    private Client findClientByUsername(String username) {
+    @Override
+    public Client findClientByUsername(String username) {
         return clientRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found!"));
     }
