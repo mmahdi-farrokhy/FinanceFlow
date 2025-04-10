@@ -27,34 +27,16 @@ public class ClientController {
         return ResponseEntity.ok("User registered successfully.");
     }
 
-    @PostMapping("/expense")
-    public ResponseEntity<Expense> createExpense(@RequestBody ExpenseRequest request) {
-        String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(clientService.createExpense(request, username));
-    }
-
     @PostMapping("/budget")
     public ResponseEntity<Budget> createBudget(@RequestBody BudgetRequest request) {
         String username = getUsernameFromAuthenticationContext();
         return ResponseEntity.ok(clientService.createBudget(request, username));
     }
 
-    @GetMapping("/expense")
-    public ResponseEntity<List<Expense>> getExpenses() {
-        String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(clientService.getExpenses(username));
-    }
-
     @GetMapping("/budget")
     public ResponseEntity<List<Budget>> getBudgets() {
         String username = getUsernameFromAuthenticationContext();
         return ResponseEntity.ok(clientService.getBudgets(username));
-    }
-
-    @GetMapping("/expense/category")
-    public ResponseEntity<List<Expense>> getExpensesByCategory(@RequestParam BudgetCategory category) {
-        String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(clientService.getExpensesByCategory(username, category));
     }
 
     @GetMapping("/budget/category")
