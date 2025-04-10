@@ -29,4 +29,6 @@ public interface ClientService {
     List<Expense> getExpensesByCategory(String username, BudgetCategory category);
 
     List<Budget> getBudgetsByCategory(String username, BudgetCategory category);
+
+    Account getAccountByType(String username, BudgetCategory category);
 }
