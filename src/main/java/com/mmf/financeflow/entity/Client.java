@@ -90,15 +90,15 @@ public class Client {
         unallocatedBudget -= amount;
     }
 
-    public Optional<Account> findAccountWithCategory(BudgetCategory newExpenseCategory) {
+    public Optional<Account> findAccountWithCategory(BudgetCategory category) {
         return getAccounts().stream()
-                .filter(account -> account.getCategory() == newExpenseCategory)
+                .filter(account -> account.getCategory() == category)
                 .findFirst();
     }
 
-    public List<String> getAccountsTitles() {
+    public Optional<Account> findAccountWithTitle(String title) {
         return getAccounts().stream()
-                .map(Account::getTitle)
-                .toList();
+                .filter(account -> account.getTitle().equals(title))
+                .findFirst();
     }
 }
