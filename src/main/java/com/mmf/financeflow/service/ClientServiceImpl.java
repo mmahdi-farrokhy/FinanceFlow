@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class ClientServiceImpl implements ClientService {
@@ -118,6 +120,11 @@ public class ClientServiceImpl implements ClientService {
         client.addAccount(account);
         clientRepository.save(client);
         return account;
+    }
+
+    @Override
+    public List<Income> getIncomes(String username) {
+        return clientRepository.findIncomesByUsername(username);
     }
 
     private Client findClientByUsername(String username) {
