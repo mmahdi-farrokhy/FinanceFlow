@@ -32,9 +32,9 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Income createIncome(IncomeRequest request) {
+    public Income createIncome(IncomeRequest request, String username) {
         Income income = new Income(request.getAmount(), request.getDescription());
-        Client client = findClientByUsername(request.getUsername());
+        Client client = findClientByUsername(username);
 
         double incomeAmount = income.getAmount();
         if (incomeAmount <= 0) {
