@@ -16,5 +16,4 @@ public class ExpenseRequest {
     private double amount;
     private String description;
     private BudgetCategory category;
-    private String username;
 }
