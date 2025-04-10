@@ -72,6 +72,12 @@ public class ClientController {
         return ResponseEntity.ok(clientService.getBudgets(username));
     }
 
+    @GetMapping("/account")
+    public ResponseEntity<List<Account>> getAccounts() {
+        String username = getUsernameFromAuthenticationContext();
+        return ResponseEntity.ok(clientService.getAccounts(username));
+    }
+
     private static String getUsernameFromAuthenticationContext() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
