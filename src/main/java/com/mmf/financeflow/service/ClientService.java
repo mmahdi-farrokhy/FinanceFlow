@@ -21,4 +21,6 @@ public interface ClientService {
     List<Income> getIncomes(String username);
 
     List<Expense> getExpenses(String username);
+
+    List<Budget> getBudgets(String username);
 }
