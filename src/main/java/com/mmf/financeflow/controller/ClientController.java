@@ -1,15 +1,11 @@
 package com.mmf.financeflow.controller;
 
 import com.mmf.financeflow.dto.*;
-import com.mmf.financeflow.entity.*;
 import com.mmf.financeflow.service.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/client")
@@ -23,7 +19,7 @@ public class ClientController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is already taken.");
         }
 
-        clientService.registerClient(request);
+        clientService.register(request);
         return ResponseEntity.ok("User registered successfully.");
     }
 }

@@ -26,7 +26,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         double expenseAmount = expense.getAmount();
         BudgetCategory expenseCategory = expense.getCategory();
 
-        Client client = clientService.findClientByUsername(username);
+        Client client = clientService.findByUsername(username);
 
         if (expenseAmount <= 0) {
             throw new InvalidAmountException("Expense amount should be greater than 0!");
@@ -44,7 +44,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         account.decreaseBalance(expenseAmount);
 
         client.addExpense(expense);
-        clientService.save(client);
+        clientService.update(client);
         return expense;
     }
 

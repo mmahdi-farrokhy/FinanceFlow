@@ -1,16 +1,14 @@
 package com.mmf.financeflow.service;
 
-import com.mmf.financeflow.dto.*;
-import com.mmf.financeflow.entity.*;
-
-import java.util.List;
+import com.mmf.financeflow.dto.RegisterRequest;
+import com.mmf.financeflow.entity.Client;
 
 public interface ClientService {
-    void registerClient(RegisterRequest registerRequest);
+    void register(RegisterRequest registerRequest);
 
     boolean existsByUsername(String username);
 
-    public Client findClientByUsername(String username);
+    Client findByUsername(String username);
 
-    void save(Client client);
+    void update(Client client);
 }

@@ -27,7 +27,7 @@ public class BudgetServiceImpl implements BudgetService {
         double budgetAmount = budget.getAmount();
         BudgetCategory budgetCategory = budget.getCategory();
 
-        Client client = clientService.findClientByUsername(username);
+        Client client = clientService.findByUsername(username);
         double unallocatedBudget = client.getUnallocatedBudget();
 
         if (budgetAmount <= 0) {
@@ -45,7 +45,7 @@ public class BudgetServiceImpl implements BudgetService {
         client.decreaseUnallocatedBudget(budgetAmount);
 
         client.addBudget(budget);
-        clientService.save(client);
+        clientService.update(client);
         return budget;
     }
 

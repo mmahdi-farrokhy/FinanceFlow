@@ -24,7 +24,7 @@ public class AccountServiceImpl implements AccountService {
         BudgetCategory accountCategory = account.getCategory();
         String accountTitle = account.getTitle();
 
-        Client client = clientService.findClientByUsername(username);
+        Client client = clientService.findByUsername(username);
 
         client.findAccountWithCategory(accountCategory)
                 .ifPresent(acc -> {
@@ -38,7 +38,7 @@ public class AccountServiceImpl implements AccountService {
         }
 
         client.addAccount(account);
-        clientService.save(client);
+        clientService.update(client);
         return account;
     }
 

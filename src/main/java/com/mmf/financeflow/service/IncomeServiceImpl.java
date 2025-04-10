@@ -19,7 +19,7 @@ public class IncomeServiceImpl implements IncomeService {
     @Override
     public Income createIncome(IncomeRequest request, String username) {
         Income income = new Income(request.getAmount(), request.getDescription());
-        Client client = clientService.findClientByUsername(username);
+        Client client = clientService.findByUsername(username);
 
         double incomeAmount = income.getAmount();
         if (incomeAmount <= 0) {
@@ -28,7 +28,7 @@ public class IncomeServiceImpl implements IncomeService {
 
         client.increaseUnallocatedBudget(incomeAmount);
         client.addIncome(income);
-        clientService.save(client);
+        clientService.update(client);
         return income;
 
     }
