@@ -15,15 +15,10 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     @Query("SELECT account FROM Account account WHERE account.client.username = :username")
     List<Account> findAccountsByUsername(@Param("username") String username);
-    
-    @Query("SELECT expense FROM Expense expense WHERE expense.client.username = :username")
-    List<Expense> findExpensesByUsername(@Param("username") String username);
+
 
     @Query("SELECT budget FROM Budget budget WHERE budget.client.username = :username")
     List<Budget> findBudgetsByUsername(@Param("username") String username);
-
-    @Query("SELECT expense FROM Expense expense WHERE expense.client.username = :username AND expense.category = :category")
-    List<Expense> findExpensesByUsernameAndCategory(@Param("username") String username, @Param("category") BudgetCategory category);
 
     @Query("SELECT budget FROM Budget budget WHERE budget.client.username = :username AND budget.category = :category")
     List<Budget> findBudgetsByUsernameAndCategory(String username, BudgetCategory category);
