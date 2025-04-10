@@ -2,7 +2,7 @@ package com.mmf.financeflow.controller;
 
 import com.mmf.financeflow.dto.IncomeRequest;
 import com.mmf.financeflow.entity.Income;
-import com.mmf.financeflow.service.ClientService;
+import com.mmf.financeflow.service.IncomeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +15,17 @@ import static com.mmf.financeflow.util.SecurityUtil.getUsernameFromAuthenticatio
 @RequestMapping("/api/income")
 @AllArgsConstructor
 public class IncomeController {
-    private ClientService clientService;
+    private IncomeService incomeService;
 
     @PostMapping("")
     public ResponseEntity<Income> createIncome(@RequestBody IncomeRequest request) {
         String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(clientService.createIncome(request, username));
+        return ResponseEntity.ok(incomeService.createIncome(request, username));
     }
 
     @GetMapping("")
     public ResponseEntity<List<Income>> getIncomes() {
         String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(clientService.getIncomes(username));
+        return ResponseEntity.ok(incomeService.getIncomes(username));
     }
 }
