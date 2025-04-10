@@ -45,7 +45,8 @@ public class ClientController {
 
     @PostMapping("/create-budget")
     public ResponseEntity<Budget> createBudget(@RequestBody BudgetRequest request) {
-        return ResponseEntity.ok(clientService.createBudget(request));
+        String username = getUsernameFromAuthenticationContext();
+        return ResponseEntity.ok(clientService.createBudget(request, username));
     }
 
     @PostMapping("/create-account")
