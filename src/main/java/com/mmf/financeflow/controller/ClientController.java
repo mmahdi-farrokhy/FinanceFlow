@@ -60,6 +60,12 @@ public class ClientController {
         return ResponseEntity.ok(clientService.getIncomes(username));
     }
 
+    @GetMapping("/expense")
+    public ResponseEntity<List<Expense>> getExpenses() {
+        String username = getUsernameFromAuthenticationContext();
+        return ResponseEntity.ok(clientService.getExpenses(username));
+    }
+
     private static String getUsernameFromAuthenticationContext() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
