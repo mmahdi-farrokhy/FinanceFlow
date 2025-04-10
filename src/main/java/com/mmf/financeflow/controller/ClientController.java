@@ -45,12 +45,6 @@ public class ClientController {
         return ResponseEntity.ok(clientService.createBudget(request, username));
     }
 
-    @PostMapping("/account")
-    public ResponseEntity<Account> createAccount(@RequestBody AccountRequest request) {
-        String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(clientService.createAccount(request, username));
-    }
-
     @GetMapping("/income")
     public ResponseEntity<List<Income>> getIncomes() {
         String username = getUsernameFromAuthenticationContext();
@@ -69,12 +63,6 @@ public class ClientController {
         return ResponseEntity.ok(clientService.getBudgets(username));
     }
 
-    @GetMapping("/account")
-    public ResponseEntity<List<Account>> getAccounts() {
-        String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(clientService.getAccounts(username));
-    }
-
     @GetMapping("/expense/category")
     public ResponseEntity<List<Expense>> getExpensesByCategory(@RequestParam BudgetCategory category) {
         String username = getUsernameFromAuthenticationContext();
@@ -85,12 +73,6 @@ public class ClientController {
     public ResponseEntity<List<Budget>> getBudgetsByCategory(@RequestParam BudgetCategory category){
         String username = getUsernameFromAuthenticationContext();
         return ResponseEntity.ok(clientService.getBudgetsByCategory(username, category));
-    }
-
-    @GetMapping("/account/category")
-    public ResponseEntity<Account> getAccountByType(@RequestParam BudgetCategory category){
-        String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(clientService.getAccountByType(username, category));
     }
 
     private static String getUsernameFromAuthenticationContext() {
