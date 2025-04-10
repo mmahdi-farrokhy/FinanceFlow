@@ -42,44 +42,6 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Expense createExpense(ExpenseRequest request, String username) {
-        Expense expense = new Expense(request.getAmount(), request.getDescription(), request.getCategory());
-        double expenseAmount = expense.getAmount();
-        BudgetCategory expenseCategory = expense.getCategory();
-
-        Client client = findClientByUsername(username);
-
-        if (expenseAmount <= 0) {
-            throw new InvalidAmountException("Expense amount should be greater than 0!");
-        }
-
-        Account account = client.findAccountWithCategory(expenseCategory)
-                .orElseThrow(() -> new MismatchedCategoryException("Account with category " + expenseCategory + " does not exist"));
-
-        double accountBalance = account.getBalance();
-
-        if (accountBalance < expenseAmount) {
-            throw new InsufficientBalanceException("Expense amount " + expenseAmount + " is more than balance of " + expenseCategory + " account: " + accountBalance);
-        }
-
-        account.decreaseBalance(expenseAmount);
-
-        client.addExpense(expense);
-        clientRepository.save(client);
-        return expense;
-    }
-
-    @Override
-    public List<Expense> getExpenses(String username) {
-        return clientRepository.findExpensesByUsername(username);
-    }
-
-    @Override
-    public List<Expense> getExpensesByCategory(String username, BudgetCategory category) {
-        return clientRepository.findExpensesByUsernameAndCategory(username, category);
-    }
-
-    @Override
     public Budget createBudget(BudgetRequest request, String username) {
         Budget budget = new Budget(request.getAmount(), request.getCategory());
         double budgetAmount = budget.getAmount();

@@ -14,12 +14,6 @@ public interface ClientService {
 
     void save(Client client);
 
-    Expense createExpense(ExpenseRequest expenseRequest, String username);
-
-    List<Expense> getExpenses(String username);
-
-    List<Expense> getExpensesByCategory(String username, BudgetCategory category);
-
     Budget createBudget(BudgetRequest budgetRequest, String username);
 
     List<Budget> getBudgets(String username);
