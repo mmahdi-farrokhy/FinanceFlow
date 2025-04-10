@@ -21,18 +21,18 @@ public class AccountController {
     @PostMapping("")
     public ResponseEntity<Account> createAccount(@RequestBody AccountRequest request) {
         String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(accountService.createAccount(request, username));
+        return ResponseEntity.ok(accountService.create(request, username));
     }
 
     @GetMapping("")
     public ResponseEntity<List<Account>> getAccounts() {
         String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(accountService.getAccounts(username));
+        return ResponseEntity.ok(accountService.findAll(username));
     }
 
     @GetMapping("/category")
     public ResponseEntity<Account> getAccountByType(@RequestParam BudgetCategory category) {
         String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(accountService.getAccountByType(username, category));
+        return ResponseEntity.ok(accountService.findByCategory(username, category));
     }
 }

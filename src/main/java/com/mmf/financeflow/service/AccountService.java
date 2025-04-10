@@ -7,9 +7,9 @@ import com.mmf.financeflow.entity.BudgetCategory;
 import java.util.List;
 
 public interface AccountService {
-    Account createAccount(AccountRequest accountRequest, String username);
+    Account create(AccountRequest accountRequest, String username);
 
-    List<Account> getAccounts(String username);
+    List<Account> findAll(String username);
 
-    Account getAccountByType(String username, BudgetCategory category);
+    Account findByCategory(String username, BudgetCategory category);
 }
