@@ -12,5 +12,4 @@ import java.time.LocalDateTime;
 public class IncomeRequest {
     private double amount;
     private String description;
-    private String username;
 }
