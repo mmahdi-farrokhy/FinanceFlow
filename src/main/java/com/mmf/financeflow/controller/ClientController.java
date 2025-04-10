@@ -1,10 +1,7 @@
 package com.mmf.financeflow.controller;
 
 import com.mmf.financeflow.dto.*;
-import com.mmf.financeflow.entity.Account;
-import com.mmf.financeflow.entity.Budget;
-import com.mmf.financeflow.entity.Expense;
-import com.mmf.financeflow.entity.Income;
+import com.mmf.financeflow.entity.*;
 import com.mmf.financeflow.service.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -76,6 +73,12 @@ public class ClientController {
     public ResponseEntity<List<Account>> getAccounts() {
         String username = getUsernameFromAuthenticationContext();
         return ResponseEntity.ok(clientService.getAccounts(username));
+    }
+
+    @GetMapping("/expense/category")
+    public ResponseEntity<List<Expense>> getExpensesByCategory(@RequestParam BudgetCategory category) {
+        String username = getUsernameFromAuthenticationContext();
+        return ResponseEntity.ok(clientService.getExpensesByCategory(username, category));
     }
 
     private static String getUsernameFromAuthenticationContext() {
