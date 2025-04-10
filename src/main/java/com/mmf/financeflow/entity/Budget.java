@@ -1,5 +1,6 @@
 package com.mmf.financeflow.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,7 +29,8 @@ public class Budget {
     @Column(name = "category", nullable = false)
     private BudgetCategory category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "client_id")
     private Client client;
 
