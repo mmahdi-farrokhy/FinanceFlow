@@ -19,4 +19,6 @@ public interface ClientService {
     Account createAccount(AccountRequest accountRequest, String username);
 
     List<Income> getIncomes(String username);
+
+    List<Expense> getExpenses(String username);
 }
