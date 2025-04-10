@@ -26,26 +26,4 @@ public class ClientController {
         clientService.registerClient(request);
         return ResponseEntity.ok("User registered successfully.");
     }
-
-    @PostMapping("/budget")
-    public ResponseEntity<Budget> createBudget(@RequestBody BudgetRequest request) {
-        String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(clientService.createBudget(request, username));
-    }
-
-    @GetMapping("/budget")
-    public ResponseEntity<List<Budget>> getBudgets() {
-        String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(clientService.getBudgets(username));
-    }
-
-    @GetMapping("/budget/category")
-    public ResponseEntity<List<Budget>> getBudgetsByCategory(@RequestParam BudgetCategory category){
-        String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(clientService.getBudgetsByCategory(username, category));
-    }
-
-    private static String getUsernameFromAuthenticationContext() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
-    }
 }
