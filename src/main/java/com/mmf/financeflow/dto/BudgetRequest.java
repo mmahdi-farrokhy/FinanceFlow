@@ -13,5 +13,4 @@ import lombok.Setter;
 public class BudgetRequest {
     private double amount;
     private BudgetCategory category;
-    private String username;
 }
