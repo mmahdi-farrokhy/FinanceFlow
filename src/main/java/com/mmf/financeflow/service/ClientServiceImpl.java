@@ -109,13 +109,22 @@ public class ClientServiceImpl implements ClientService {
     public Account createAccount(AccountRequest request, String username) {
         Account account = new Account(request.getTitle(), request.getCategory());
         BudgetCategory accountCategory = account.getCategory();
+        String accountTitle = account.getTitle();
 
         Client client = findClientByUsername(username);
 
-        client.findAccountWithCategory(account.getCategory())
+        client.findAccountWithCategory(accountCategory)
                 .ifPresent(acc -> {
                     throw new DuplicatedAccountCategoryException("Account from category " + accountCategory + " already exists!");
                 });
+
+        List<String> accountsTitles = client.getAccounts().stream()
+                .map(Account::getTitle)
+                .toList();
+
+        if (accountsTitles.contains(accountTitle)) {
+            throw new DuplicatedAccountCategoryException("Account with title " + accountTitle + " already exists!");
+        }
 
         client.addAccount(account);
         clientRepository.save(client);
