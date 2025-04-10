@@ -13,10 +13,4 @@ public interface ClientService {
     public Client findClientByUsername(String username);
 
     void save(Client client);
-
-    Account createAccount(AccountRequest accountRequest, String username);
-
-    List<Account> getAccounts(String username);
-
-    Account getAccountByType(String username, BudgetCategory category);
 }

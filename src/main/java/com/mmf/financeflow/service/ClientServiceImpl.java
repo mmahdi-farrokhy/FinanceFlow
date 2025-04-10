@@ -42,40 +42,6 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Account createAccount(AccountRequest request, String username) {
-        Account account = new Account(request.getTitle(), request.getCategory());
-        BudgetCategory accountCategory = account.getCategory();
-        String accountTitle = account.getTitle();
-
-        Client client = findClientByUsername(username);
-
-        client.findAccountWithCategory(accountCategory)
-                .ifPresent(acc -> {
-                    throw new DuplicatedAccountCategoryException("Account from category " + accountCategory + " already exists!");
-                });
-
-        List<String> accountsTitles = client.getAccountsTitles();
-
-        if (accountsTitles.contains(accountTitle)) {
-            throw new DuplicatedAccountCategoryException("Account with title " + accountTitle + " already exists!");
-        }
-
-        client.addAccount(account);
-        clientRepository.save(client);
-        return account;
-    }
-
-    @Override
-    public List<Account> getAccounts(String username) {
-        return clientRepository.findAccountsByUsername(username);
-    }
-
-    @Override
-    public Account getAccountByType(String username, BudgetCategory category) {
-        return clientRepository.findAccountByUsernameAndCategory(username, category);
-    }
-
-    @Override
     public Client findClientByUsername(String username) {
         return clientRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found!"));
