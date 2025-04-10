@@ -39,7 +39,8 @@ public class ClientController {
 
     @PostMapping("/create-expense")
     public ResponseEntity<Expense> createExpense(@RequestBody ExpenseRequest request) {
-        return ResponseEntity.ok(clientService.createExpense(request));
+        String username = getUsernameFromAuthenticationContext();
+        return ResponseEntity.ok(clientService.createExpense(request, username));
     }
 
     @PostMapping("/create-budget")
