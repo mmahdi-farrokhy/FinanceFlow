@@ -22,20 +22,20 @@ public class BudgetServiceImpl implements BudgetService {
 
     @Override
 
-    public Budget createBudget(BudgetRequest request, String username) {
+    public Budget create(BudgetRequest request, String username) {
+        double budgetAmount = request.getAmount();
+        BudgetCategory budgetCategory = request.getCategory();
         Budget budget = new Budget(request.getAmount(), request.getCategory());
-        double budgetAmount = budget.getAmount();
-        BudgetCategory budgetCategory = budget.getCategory();
 
         Client client = clientService.findByUsername(username);
-        double unallocatedBudget = client.getUnallocatedBudget();
+        double unallocatedMoney = client.getUnallocatedMoney();
 
         if (budgetAmount <= 0) {
             throw new InvalidAmountException("Budget amount should be greater than 0!");
         }
 
-        if (budgetAmount > unallocatedBudget) {
-            throw new InsufficientBalanceException("Budget amount " + budgetAmount + " is more than unallocated budget: " + unallocatedBudget);
+        if (budgetAmount > unallocatedMoney) {
+            throw new InsufficientBalanceException("Budget amount " + budgetAmount + " is more than unallocated budget: " + unallocatedMoney);
         }
 
         Account account = client.findAccountWithCategory(budgetCategory)
@@ -50,12 +50,12 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     @Override
-    public List<Budget> getBudgets(String username) {
+    public List<Budget> findAll(String username) {
         return budgetRepository.findBudgetsByUsername(username);
     }
 
     @Override
-    public List<Budget> getBudgetsByCategory(String username, BudgetCategory category) {
+    public List<Budget> findByCategory(String username, BudgetCategory category) {
         return budgetRepository.findBudgetsByUsernameAndCategory(username, category);
     }
 }

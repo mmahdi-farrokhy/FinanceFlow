@@ -21,18 +21,18 @@ public class BudgetController {
     @PostMapping("")
     public ResponseEntity<Budget> createBudget(@RequestBody BudgetRequest request) {
         String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(budgetService.createBudget(request, username));
+        return ResponseEntity.ok(budgetService.create(request, username));
     }
 
     @GetMapping("")
     public ResponseEntity<List<Budget>> getBudgets() {
         String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(budgetService.getBudgets(username));
+        return ResponseEntity.ok(budgetService.findAll(username));
     }
 
     @GetMapping("/category")
     public ResponseEntity<List<Budget>> getBudgetsByCategory(@RequestParam BudgetCategory category) {
         String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(budgetService.getBudgetsByCategory(username, category));
+        return ResponseEntity.ok(budgetService.findByCategory(username, category));
     }
 }

@@ -7,9 +7,9 @@ import com.mmf.financeflow.entity.BudgetCategory;
 import java.util.List;
 
 public interface BudgetService {
-    Budget createBudget(BudgetRequest budgetRequest, String username);
+    Budget create(BudgetRequest budgetRequest, String username);
 
-    List<Budget> getBudgets(String username);
+    List<Budget> findAll(String username);
 
-    List<Budget> getBudgetsByCategory(String username, BudgetCategory category);
+    List<Budget> findByCategory(String username, BudgetCategory category);
 }
