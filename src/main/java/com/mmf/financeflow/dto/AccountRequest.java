@@ -13,5 +13,4 @@ import lombok.Setter;
 public class AccountRequest {
     private String title;
     private BudgetCategory category;
-    private String username;
 }
