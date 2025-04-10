@@ -26,7 +26,7 @@ public class Client {
     private String password;
 
     @Column(name = "unallocated_budget")
-    private double unallocatedBudget;
+    private double unallocatedMoney;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Account> accounts;
@@ -43,7 +43,7 @@ public class Client {
     public Client(String username, String password) {
         this.username = username;
         this.password = password;
-        this.unallocatedBudget = 0;
+        this.unallocatedMoney = 0;
     }
 
     public void addAccount(Account newAccount) {
@@ -83,11 +83,11 @@ public class Client {
     }
 
     public void increaseUnallocatedBudget(double amount) {
-        unallocatedBudget += amount;
+        unallocatedMoney += amount;
     }
 
     public void decreaseUnallocatedBudget(double amount) {
-        unallocatedBudget -= amount;
+        unallocatedMoney -= amount;
     }
 
     public Optional<Account> findAccountWithCategory(BudgetCategory category) {
