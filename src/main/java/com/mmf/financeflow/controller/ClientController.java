@@ -9,6 +9,7 @@ import com.mmf.financeflow.service.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +33,8 @@ public class ClientController {
 
     @PostMapping("/create-income")
     public ResponseEntity<Income> createIncome(@RequestBody IncomeRequest request) {
-        return ResponseEntity.ok(clientService.createIncome(request));
+        String username = getUsernameFromAuthenticationContext();
+        return ResponseEntity.ok(clientService.createIncome(request, username));
     }
 
     @PostMapping("/create-expense")
@@ -48,5 +50,9 @@ public class ClientController {
     @PostMapping("/create-account")
     public ResponseEntity<Account> createAccount(@RequestBody AccountRequest request) {
         return ResponseEntity.ok(clientService.createAccount(request));
+    }
+
+    private static String getUsernameFromAuthenticationContext() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }
