@@ -31,25 +31,25 @@ public class ClientController {
         return ResponseEntity.ok("User registered successfully.");
     }
 
-    @PostMapping("/create-income")
+    @PostMapping("/income")
     public ResponseEntity<Income> createIncome(@RequestBody IncomeRequest request) {
         String username = getUsernameFromAuthenticationContext();
         return ResponseEntity.ok(clientService.createIncome(request, username));
     }
 
-    @PostMapping("/create-expense")
+    @PostMapping("/expense")
     public ResponseEntity<Expense> createExpense(@RequestBody ExpenseRequest request) {
         String username = getUsernameFromAuthenticationContext();
         return ResponseEntity.ok(clientService.createExpense(request, username));
     }
 
-    @PostMapping("/create-budget")
+    @PostMapping("/budget")
     public ResponseEntity<Budget> createBudget(@RequestBody BudgetRequest request) {
         String username = getUsernameFromAuthenticationContext();
         return ResponseEntity.ok(clientService.createBudget(request, username));
     }
 
-    @PostMapping("/create-account")
+    @PostMapping("/account")
     public ResponseEntity<Account> createAccount(@RequestBody AccountRequest request) {
         String username = getUsernameFromAuthenticationContext();
         return ResponseEntity.ok(clientService.createAccount(request, username));
