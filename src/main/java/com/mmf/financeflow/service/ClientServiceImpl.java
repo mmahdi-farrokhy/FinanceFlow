@@ -48,12 +48,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Expense createExpense(ExpenseRequest request) {
+    public Expense createExpense(ExpenseRequest request, String username) {
         Expense expense = new Expense(request.getAmount(), request.getDescription(), request.getCategory());
         double expenseAmount = expense.getAmount();
         BudgetCategory expenseCategory = expense.getCategory();
 
-        Client client = findClientByUsername(request.getUsername());
+        Client client = findClientByUsername(username);
 
         if (expenseAmount <= 0) {
             throw new InvalidAmountException("Expense amount should be greater than 0!");
