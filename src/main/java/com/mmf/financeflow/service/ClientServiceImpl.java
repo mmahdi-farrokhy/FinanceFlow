@@ -142,6 +142,11 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.findAccountsByUsername(username);
     }
 
+    @Override
+    public List<Expense> getExpensesByCategory(String username, BudgetCategory category) {
+        return clientRepository.findExpensesByUsernameAndCategory(username, category);
+    }
+
     private Client findClientByUsername(String username) {
         return clientRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found!"));
