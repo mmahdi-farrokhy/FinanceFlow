@@ -12,10 +12,4 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     Optional<Client> findByUsername(String username);
 
     boolean existsByUsername(String username);
-
-    @Query("SELECT account FROM Account account WHERE account.client.username = :username")
-    List<Account> findAccountsByUsername(@Param("username") String username);
-
-    @Query("SELECT account FROM Account account WHERE account.client.username = :username AND account.category = :category")
-    Account findAccountByUsernameAndCategory(String username, BudgetCategory category);
 }
