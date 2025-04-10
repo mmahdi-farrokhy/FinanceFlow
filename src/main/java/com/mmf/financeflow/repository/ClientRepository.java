@@ -27,4 +27,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     @Query("SELECT expense FROM Expense expense WHERE expense.client.username = :username AND expense.category = :category")
     List<Expense> findExpensesByUsernameAndCategory(@Param("username") String username, @Param("category") BudgetCategory category);
+
+    @Query("SELECT budget FROM Budget budget WHERE budget.client.username = :username AND budget.category = :category")
+    List<Budget> findBudgetsByUsernameAndCategory(String username, BudgetCategory category);
 }
