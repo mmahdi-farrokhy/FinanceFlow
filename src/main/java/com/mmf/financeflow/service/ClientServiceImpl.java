@@ -42,44 +42,6 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Budget createBudget(BudgetRequest request, String username) {
-        Budget budget = new Budget(request.getAmount(), request.getCategory());
-        double budgetAmount = budget.getAmount();
-        BudgetCategory budgetCategory = budget.getCategory();
-
-        Client client = findClientByUsername(username);
-        double unallocatedBudget = client.getUnallocatedBudget();
-
-        if (budgetAmount <= 0) {
-            throw new InvalidAmountException("Budget amount should be greater than 0!");
-        }
-
-        if (budgetAmount > unallocatedBudget) {
-            throw new InsufficientBalanceException("Budget amount " + budgetAmount + " is more than unallocated budget: " + unallocatedBudget);
-        }
-
-        Account account = client.findAccountWithCategory(budgetCategory)
-                .orElseThrow(() -> new MismatchedCategoryException("Account with category " + budgetCategory + " does not exist"));
-
-        account.increaseBalance(budgetAmount);
-        client.decreaseUnallocatedBudget(budgetAmount);
-
-        client.addBudget(budget);
-        clientRepository.save(client);
-        return budget;
-    }
-
-    @Override
-    public List<Budget> getBudgets(String username) {
-        return clientRepository.findBudgetsByUsername(username);
-    }
-
-    @Override
-    public List<Budget> getBudgetsByCategory(String username, BudgetCategory category) {
-        return clientRepository.findBudgetsByUsernameAndCategory(username, category);
-    }
-
-    @Override
     public Account createAccount(AccountRequest request, String username) {
         Account account = new Account(request.getTitle(), request.getCategory());
         BudgetCategory accountCategory = account.getCategory();

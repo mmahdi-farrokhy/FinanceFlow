@@ -14,12 +14,6 @@ public interface ClientService {
 
     void save(Client client);
 
-    Budget createBudget(BudgetRequest budgetRequest, String username);
-
-    List<Budget> getBudgets(String username);
-
-    List<Budget> getBudgetsByCategory(String username, BudgetCategory category);
-
     Account createAccount(AccountRequest accountRequest, String username);
 
     List<Account> getAccounts(String username);
