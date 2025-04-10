@@ -118,7 +118,7 @@ public class ClientServiceImpl implements ClientService {
                     throw new DuplicatedAccountCategoryException("Account from category " + accountCategory + " already exists!");
                 });
 
-        List<String> accountsTitles = getAccountsTitles(client);
+        List<String> accountsTitles = client.getAccountsTitles();
 
         if (accountsTitles.contains(accountTitle)) {
             throw new DuplicatedAccountCategoryException("Account with title " + accountTitle + " already exists!");
@@ -127,12 +127,6 @@ public class ClientServiceImpl implements ClientService {
         client.addAccount(account);
         clientRepository.save(client);
         return account;
-    }
-
-    private static List<String> getAccountsTitles(Client client) {
-        return client.getAccounts().stream()
-                .map(Account::getTitle)
-                .toList();
     }
 
     @Override

@@ -95,4 +95,10 @@ public class Client {
                 .filter(account -> account.getCategory() == newExpenseCategory)
                 .findFirst();
     }
+
+    public List<String> getAccountsTitles() {
+        return getAccounts().stream()
+                .map(Account::getTitle)
+                .toList();
+    }
 }
