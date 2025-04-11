@@ -21,10 +21,11 @@ public class ExpenseServiceImpl implements ExpenseService {
     private ExpenseRepository expenseRepository;
 
     @Override
-    public Expense createExpense(ExpenseRequest request, String username) {
-        Expense expense = new Expense(request.getAmount(), request.getDescription(), request.getCategory());
-        double expenseAmount = expense.getAmount();
-        BudgetCategory expenseCategory = expense.getCategory();
+    public Expense create(ExpenseRequest request, String username) {
+        double expenseAmount = request.getAmount();
+        String expenseDescription = request.getDescription();
+        BudgetCategory expenseCategory = request.getCategory();
+        Expense expense = new Expense(expenseAmount, expenseDescription, expenseCategory);
 
         Client client = clientService.findByUsername(username);
 
@@ -49,12 +50,12 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public List<Expense> getExpenses(String username) {
+    public List<Expense> findAll(String username) {
         return expenseRepository.findExpensesByUsername(username);
     }
 
     @Override
-    public List<Expense> getExpensesByCategory(String username, BudgetCategory category) {
+    public List<Expense> findByCategory(String username, BudgetCategory category) {
         return expenseRepository.findExpensesByUsernameAndCategory(username, category);
     }
 }

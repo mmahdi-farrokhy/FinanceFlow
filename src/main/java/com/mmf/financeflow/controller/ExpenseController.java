@@ -21,18 +21,18 @@ public class ExpenseController {
     @PostMapping("")
     public ResponseEntity<Expense> createExpense(@RequestBody ExpenseRequest request) {
         String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(expenseService.createExpense(request, username));
+        return ResponseEntity.ok(expenseService.create(request, username));
     }
 
     @GetMapping("")
     public ResponseEntity<List<Expense>> getExpenses() {
         String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(expenseService.getExpenses(username));
+        return ResponseEntity.ok(expenseService.findAll(username));
     }
 
     @GetMapping("/category")
     public ResponseEntity<List<Expense>> getExpensesByCategory(@RequestParam BudgetCategory category) {
         String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(expenseService.getExpensesByCategory(username, category));
+        return ResponseEntity.ok(expenseService.findByCategory(username, category));
     }
 }

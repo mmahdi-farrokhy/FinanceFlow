@@ -7,9 +7,9 @@ import com.mmf.financeflow.entity.Expense;
 import java.util.List;
 
 public interface ExpenseService {
-    Expense createExpense(ExpenseRequest expenseRequest, String username);
+    Expense create(ExpenseRequest expenseRequest, String username);
 
-    List<Expense> getExpenses(String username);
+    List<Expense> findAll(String username);
 
-    List<Expense> getExpensesByCategory(String username, BudgetCategory category);
+    List<Expense> findByCategory(String username, BudgetCategory category);
 }
