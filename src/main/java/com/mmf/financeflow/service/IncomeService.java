@@ -6,7 +6,7 @@ import com.mmf.financeflow.entity.Income;
 import java.util.List;
 
 public interface IncomeService {
-    Income createIncome(IncomeRequest request, String username);
+    Income create(IncomeRequest request, String username);
 
-    List<Income> getIncomes(String username);
+    List<Income> findAll(String username);
 }

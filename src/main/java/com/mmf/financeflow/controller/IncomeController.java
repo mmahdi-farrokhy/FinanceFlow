@@ -20,12 +20,12 @@ public class IncomeController {
     @PostMapping("")
     public ResponseEntity<Income> createIncome(@RequestBody IncomeRequest request) {
         String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(incomeService.createIncome(request, username));
+        return ResponseEntity.ok(incomeService.create(request, username));
     }
 
     @GetMapping("")
     public ResponseEntity<List<Income>> getIncomes() {
         String username = getUsernameFromAuthenticationContext();
-        return ResponseEntity.ok(incomeService.getIncomes(username));
+        return ResponseEntity.ok(incomeService.findAll(username));
     }
 }

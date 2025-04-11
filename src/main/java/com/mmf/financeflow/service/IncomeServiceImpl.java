@@ -17,11 +17,13 @@ public class IncomeServiceImpl implements IncomeService {
     private IncomeRepository incomeRepository;
 
     @Override
-    public Income createIncome(IncomeRequest request, String username) {
-        Income income = new Income(request.getAmount(), request.getDescription());
+    public Income create(IncomeRequest request, String username) {
+        double incomeAmount = request.getAmount();
+        String incomeDescription = request.getDescription();
+        Income income = new Income(incomeAmount, incomeDescription);
+
         Client client = clientService.findByUsername(username);
 
-        double incomeAmount = income.getAmount();
         if (incomeAmount <= 0) {
             throw new InvalidAmountException("Income amount should be greater than 0!");
         }
@@ -30,11 +32,10 @@ public class IncomeServiceImpl implements IncomeService {
         client.addIncome(income);
         clientService.update(client);
         return income;
-
     }
 
     @Override
-    public List<Income> getIncomes(String username) {
+    public List<Income> findAll(String username) {
         return incomeRepository.findIncomesByUsername(username);
     }
 }
